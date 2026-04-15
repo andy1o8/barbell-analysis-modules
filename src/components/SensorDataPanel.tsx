@@ -62,8 +62,9 @@ export function SensorDataPanel() {
         .order("created_at", { ascending: false })
         .limit(1);
 
-      if (data?.[0]?.sensor_data) {
-        setNodes(data[0].sensor_data as unknown as SensorNodes);
+      const raw = data?.[0]?.sensor_data;
+      if (raw && typeof raw === "object") {
+        setNodes(raw as unknown as SensorNodes);
       }
     };
     fetchLatest();
