@@ -101,7 +101,7 @@ export function FormAnalysisCard() {
           onClick={handleAnalyze}
           disabled={streaming}
           size="sm"
-          className="bg-[linear-gradient(90deg,#FF6B6B,#4ECDC4,#45B7D1,#96E6A1,#DDA0DD,#FF6B6B)] bg-[length:300%_auto] animate-[gradient-shift_4s_linear_infinite] text-white hover:opacity-90 px-[13px] py-px text-sm border-0"
+          className="bg-[conic-gradient(from_var(--angle),#86EFAC,#67E8F9,#818CF8,#C084FC,#86EFAC)] animate-[spin-gradient_3s_linear_infinite] text-white hover:opacity-90 px-[13px] py-px text-sm border-0 [--angle:0deg]"
         >
           {streaming ? (
             <>
