@@ -51,7 +51,12 @@ export function RepCounter({ resetSignal }: { resetSignal?: number }) {
   return (
     <div className="flex flex-col items-center justify-center rounded-2xl border bg-card p-8 shadow-sm">
       <p className="font-bold text-foreground uppercase tracking-wider text-2xl">Reps Completed</p>
-      <p className="mt-3 text-7xl font-bold tabular-nums text-foreground">{reps}</p>
+      <p
+        className="mt-3 text-7xl font-bold tabular-nums bg-[conic-gradient(from_var(--angle),#16A34A,#0284C7,#4F46E5,#7C3AED,#16A34A)] bg-clip-text text-transparent animate-[spin-gradient_3s_linear_infinite] drop-shadow-[0_0_24px_rgba(79,70,229,0.5)]"
+        style={{ filter: "drop-shadow(0 0 18px rgba(79,70,229,0.4)) drop-shadow(0 0 40px rgba(2,132,199,0.25))" }}
+      >
+        {reps}
+      </p>
       <p className="mt-3 text-xs text-muted-foreground">Updated {timeAgo}</p>
     </div>
   );
