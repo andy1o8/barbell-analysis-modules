@@ -26,13 +26,36 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
     );
 
+    const totalReps = body.total_reps ?? 0;
+
+    // Check if the database is empty
+    const { count, error: countError } = await supabase
+      .from("workout_telemetry")
+      .select("id", { count: "exact", head: true });
+
+    if (countError) {
+      console.error("Count error:", countError);
+      return new Response(JSON.stringify({ error: countError.message }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // If DB is empty and incoming reps > 0, signal reset to Python script
+    if (count === 0 && totalReps > 0) {
+      return new Response(JSON.stringify({ reset_requested: true }), {
+        status: 200,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Normal insert
     const row: Record<string, unknown> = {
       event: body.event ?? "unknown",
-      total_reps: body.total_reps ?? 0,
+      total_reps: totalReps,
       timestamp_ms: body.timestamp_ms ?? Date.now(),
     };
 
-    // When the event is a telemetry_update, persist the nodes payload
     if (body.event === "telemetry_update" && body.nodes) {
       row.sensor_data = body.nodes;
     }

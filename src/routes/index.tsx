@@ -53,11 +53,12 @@ function Dashboard() {
   const handleReset = async () => {
     setResetting(true);
     try {
-      // 1. Call the reset-counter edge function (signal for Python script)
-      const { data: fnData, error: fnError } = await supabase.functions.invoke("reset-counter", {
-        method: "POST",
-      });
-      if (fnError) console.error("Edge function error:", fnError);
+      // 1. Delete all rows from workout_telemetry
+      const { error: delError } = await supabase
+        .from("workout_telemetry")
+        .delete()
+        .gte("id", "00000000-0000-0000-0000-000000000000");
+      if (delError) console.error("Delete error:", delError);
 
       // 2. Reset local rep counter state immediately
       setResetSignal((s) => s + 1);
