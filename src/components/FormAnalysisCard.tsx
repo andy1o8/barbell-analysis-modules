@@ -97,11 +97,12 @@ export function FormAnalysisCard() {
         <h3 className="uppercase tracking-wider text-2xl font-bold text-foreground">
           AI Form Analysis
         </h3>
+        <div className="relative rounded-md p-[2px] [background:conic-gradient(from_var(--angle),#22C55E,#0EA5E9,#6366F1,#A855F7,#22C55E)] animate-[spin-gradient_3s_linear_infinite]">
         <Button
           onClick={handleAnalyze}
           disabled={streaming}
           size="sm"
-          className="[background:conic-gradient(from_var(--angle),#86EFAC,#67E8F9,#818CF8,#C084FC,#86EFAC)] animate-[spin-gradient_3s_linear_infinite] text-white hover:opacity-90 px-[13px] py-px text-sm border-0"
+          className="bg-white text-foreground hover:bg-white/90 px-[13px] py-px text-sm border-0 rounded-[calc(theme(borderRadius.md)-2px)]"
         >
           {streaming ? (
             <>
@@ -112,6 +113,7 @@ export function FormAnalysisCard() {
             "Analyze Form"
           )}
         </Button>
+        </div>
       </div>
       <div className="mt-4">
         {analysis ? (
