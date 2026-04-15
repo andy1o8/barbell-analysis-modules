@@ -54,7 +54,7 @@ export function ConnectionStatus() {
     <div className="flex items-center gap-1.5">
       <span
         className={`inline-block h-2 w-2 rounded-full ${
-          connected ? "bg-primary animate-pulse" : "bg-destructive"
+          connected ? "bg-primary animate-pulse" : "bg-red-600"
         }`}
       />
       <span className="text-xs text-muted-foreground">
