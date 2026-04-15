@@ -85,9 +85,9 @@ function Dashboard() {
               <p className="text-xs text-muted-foreground">Reps and Form Tracker</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="items-center gap-3 flex flex-row">
             <ConnectionStatus />
-            <Button variant="outline" size="sm" onClick={handleReset} disabled={resetting}>
+            <Button variant="outline" size="sm" onClick={handleReset} disabled={resetting} className="px-[13px] text-sm">
               {resetting ? "Resetting…" : "Reset Session"}
             </Button>
             <ThemeToggle />
