@@ -7,9 +7,9 @@ interface NodeReading {
   accelerationX: number;
   accelerationY: number;
   accelerationZ: number;
-  gyroscopeX: number;
-  gyroscopeY: number;
-  gyroscopeZ: number;
+  gyroX: number;
+  gyroY: number;
+  gyroZ: number;
 }
 
 interface SensorNodes {
@@ -23,9 +23,9 @@ const METRICS: { key: keyof NodeReading; label: string; unit: string; decimals: 
   { key: "accelerationX", label: "Acc X", unit: "m/s²", decimals: 2 },
   { key: "accelerationY", label: "Acc Y", unit: "m/s²", decimals: 2 },
   { key: "accelerationZ", label: "Acc Z", unit: "m/s²", decimals: 2 },
-  { key: "gyroscopeX", label: "Gyro X", unit: "°/s", decimals: 3 },
-  { key: "gyroscopeY", label: "Gyro Y", unit: "°/s", decimals: 3 },
-  { key: "gyroscopeZ", label: "Gyro Z", unit: "°/s", decimals: 3 },
+  { key: "gyroX", label: "Gyro X", unit: "°/s", decimals: 3 },
+  { key: "gyroY", label: "Gyro Y", unit: "°/s", decimals: 3 },
+  { key: "gyroZ", label: "Gyro Z", unit: "°/s", decimals: 3 },
 ];
 
 function NodeGrid({ node, side }: { node: NodeReading; side: string }) {
