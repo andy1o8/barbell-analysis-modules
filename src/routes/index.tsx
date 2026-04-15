@@ -77,26 +77,33 @@ function Dashboard() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-3">
-            <img src={logoImg} alt="Barbell Analysis Module logo" className="h-10 w-10 rounded-md object-cover" />
-            <div>
-              <h1 className="text-xl font-bold text-foreground tracking-tight">Barbell Analysis Module Tracker</h1>
-              <p className="text-xs text-muted-foreground">Reps and Form Tracker</p>
+        <div className="mx-auto max-w-5xl px-4 py-3 sm:px-6 sm:py-4">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3 min-w-0">
+              <img src={logoImg} alt="Barbell Analysis Module logo" className="h-9 w-9 shrink-0 rounded-md object-cover sm:h-10 sm:w-10" />
+              <div className="min-w-0">
+                <h1 className="text-base font-bold text-foreground tracking-tight sm:text-xl truncate">Barbell Analysis Module</h1>
+                <p className="text-xs text-muted-foreground">Reps and Form Tracker</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0 sm:gap-3">
+              <div className="hidden sm:block">
+                <ConnectionStatus />
+              </div>
+              <Button variant="outline" size="sm" onClick={handleReset} disabled={resetting} className="px-2 text-xs sm:px-[13px] sm:text-sm">
+                {resetting ? "Resetting…" : "Reset"}
+              </Button>
+              <ThemeToggle />
             </div>
           </div>
-          <div className="items-center gap-3 flex flex-row">
+          <div className="mt-2 sm:hidden">
             <ConnectionStatus />
-            <Button variant="outline" size="sm" onClick={handleReset} disabled={resetting} className="px-[13px] text-sm">
-              {resetting ? "Resetting…" : "Reset Session"}
-            </Button>
-            <ThemeToggle />
           </div>
         </div>
       </header>
 
       {/* Main content */}
-      <main className="mx-auto max-w-5xl px-6 py-8 space-y-6">
+      <main className="mx-auto max-w-5xl px-4 py-6 space-y-6 sm:px-6 sm:py-8">
         {/* Rep counter */}
         <RepCounter resetSignal={resetSignal} />
 
