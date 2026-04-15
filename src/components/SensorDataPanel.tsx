@@ -23,9 +23,9 @@ const METRICS: { key: keyof NodeReading; label: string; unit: string; decimals: 
   { key: "accelerationX", label: "Acc X", unit: "m/s²", decimals: 2 },
   { key: "accelerationY", label: "Acc Y", unit: "m/s²", decimals: 2 },
   { key: "accelerationZ", label: "Acc Z", unit: "m/s²", decimals: 2 },
-  { key: "gyroscopeX", label: "Gyro X", unit: "rad/s", decimals: 3 },
-  { key: "gyroscopeY", label: "Gyro Y", unit: "rad/s", decimals: 3 },
-  { key: "gyroscopeZ", label: "Gyro Z", unit: "rad/s", decimals: 3 },
+  { key: "gyroscopeX", label: "Gyro X", unit: "°/s", decimals: 3 },
+  { key: "gyroscopeY", label: "Gyro Y", unit: "°/s", decimals: 3 },
+  { key: "gyroscopeZ", label: "Gyro Z", unit: "°/s", decimals: 3 },
 ];
 
 function NodeGrid({ node, side }: { node: NodeReading; side: string }) {
