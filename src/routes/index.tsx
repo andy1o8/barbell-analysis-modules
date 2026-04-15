@@ -6,6 +6,7 @@ import { getWorkoutData, resetWorkout } from "@/server/workout.functions";
 import { RepCounter } from "@/components/RepCounter";
 import { SensorDataPanel } from "@/components/SensorDataPanel";
 import { FormAnalysisCard } from "@/components/FormAnalysisCard";
+import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { supabase } from "@/integrations/supabase/client";
