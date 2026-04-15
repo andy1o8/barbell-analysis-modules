@@ -76,7 +76,7 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-sm">
+      <header className="relative border-b bg-card/50 backdrop-blur-sm">
         <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 py-4 md:flex-row md:justify-between md:gap-0">
           <div className="flex items-center gap-3">
             <img src={logoImg} alt="Barbell Analysis Module logo" className="h-10 w-10 rounded-md object-cover" />
@@ -90,8 +90,10 @@ function Dashboard() {
             <Button variant="outline" size="sm" onClick={handleReset} disabled={resetting} className="px-[13px] text-sm">
               {resetting ? "Resetting…" : "Reset Session"}
             </Button>
-            <ThemeToggle />
           </div>
+        </div>
+        <div className="absolute right-4 top-1/2 -translate-y-1/2">
+          <ThemeToggle />
         </div>
       </header>
 

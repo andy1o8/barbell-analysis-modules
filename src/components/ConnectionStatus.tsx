@@ -58,7 +58,11 @@ export function ConnectionStatus() {
         }`}
       />
       <span className="text-xs text-muted-foreground">
-        {connected ? "Connected" : `Disconnected · Last seen: ${formatAgo(diffMs)}`}
+        {connected
+          ? "Connected"
+          : isFinite(diffMs) && diffMs > 0
+            ? `Disconnected · Last seen: ${formatAgo(diffMs)}`
+            : "Disconnected"}
       </span>
     </div>
   );
