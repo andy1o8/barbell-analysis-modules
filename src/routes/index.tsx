@@ -8,6 +8,7 @@ import { SensorDataPanel } from "@/components/SensorDataPanel";
 import { FormAnalysisCard } from "@/components/FormAnalysisCard";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { supabase } from "@/integrations/supabase/client";
 import type { WorkoutSession } from "@/lib/sensor-store";
 
 export const Route = createFileRoute("/")({
@@ -22,6 +23,8 @@ export const Route = createFileRoute("/")({
 
 function Dashboard() {
   const [session, setSession] = useState<WorkoutSession | null>(null);
+  const [resetSignal, setResetSignal] = useState(0);
+  const [resetting, setResetting] = useState(false);
   const getDataFn = useServerFn(getWorkoutData);
   const resetFn = useServerFn(resetWorkout);
 
@@ -47,8 +50,25 @@ function Dashboard() {
   }, [getDataFn]);
 
   const handleReset = async () => {
-    const data = await resetFn();
-    setSession(data);
+    setResetting(true);
+    try {
+      // 1. Call the reset-counter edge function (signal for Python script)
+      const { data: fnData, error: fnError } = await supabase.functions.invoke("reset-counter", {
+        method: "POST",
+      });
+      if (fnError) console.error("Edge function error:", fnError);
+
+      // 2. Reset local rep counter state immediately
+      setResetSignal((s) => s + 1);
+
+      // 3. Reset server-side session
+      const data = await resetFn();
+      setSession(data);
+    } catch (err) {
+      console.error("Reset failed:", err);
+    } finally {
+      setResetting(false);
+    }
   };
 
   return (
@@ -70,8 +90,8 @@ function Dashboard() {
                 {session ? "Connected" : "Connecting…"}
               </span>
             </div>
-            <Button variant="outline" size="sm" onClick={handleReset}>
-              Reset Session
+            <Button variant="outline" size="sm" onClick={handleReset} disabled={resetting}>
+              {resetting ? "Resetting…" : "Reset Session"}
             </Button>
             <ThemeToggle />
           </div>
@@ -81,7 +101,7 @@ function Dashboard() {
       {/* Main content */}
       <main className="mx-auto max-w-5xl px-6 py-8 space-y-6">
         {/* Rep counter */}
-        <RepCounter />
+        <RepCounter resetSignal={resetSignal} />
 
         {/* Sensor data */}
         <SensorDataPanel />

@@ -1,9 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-export function RepCounter() {
+export function RepCounter({ resetSignal }: { resetSignal?: number }) {
   const [reps, setReps] = useState(0);
   const [lastUpdated, setLastUpdated] = useState<string>(new Date().toISOString());
+
+  // Reset local state when resetSignal changes
+  useEffect(() => {
+    if (resetSignal && resetSignal > 0) {
+      setReps(0);
+      setLastUpdated(new Date().toISOString());
+    }
+  }, [resetSignal]);
 
   useEffect(() => {
     // Fetch initial max total_reps
