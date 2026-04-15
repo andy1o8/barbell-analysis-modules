@@ -39,7 +39,7 @@ function NodeGrid({ node, side }: { node: NodeReading; side: string }) {
           <div key={m.key} className="rounded-xl bg-muted/50 px-3 py-2">
             <p className="text-xs text-muted-foreground">{m.label}</p>
             <p className="mt-0.5 text-base font-semibold tabular-nums text-foreground">
-              {(node[m.key] as number).toFixed(m.decimals)}
+              {(Number(node[m.key] ?? 0)).toFixed(m.decimals)}
               <span className="ml-1 text-[10px] font-normal text-muted-foreground">{m.unit}</span>
             </p>
           </div>
@@ -62,8 +62,9 @@ export function SensorDataPanel() {
         .order("created_at", { ascending: false })
         .limit(1);
 
-      if (data?.[0]?.sensor_data) {
-        setNodes(data[0].sensor_data as unknown as SensorNodes);
+      const raw = data?.[0]?.sensor_data;
+      if (raw && typeof raw === "object") {
+        setNodes(raw as unknown as SensorNodes);
       }
     };
     fetchLatest();
