@@ -37,36 +37,39 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Downsample: take every Nth row, capped at 50 data points
-    const MAX_POINTS = 50;
-    const step = Math.max(1, Math.ceil(rows.length / MAX_POINTS));
-    const sampled = rows.filter((_, i) => i % step === 0).slice(0, MAX_POINTS);
-
-    // Extract gyro data as compact JSON array
-    const gyroData: any[] = [];
+    // Extract gyro data from sensor_data JSONB
+    const gyroTimeSeries: string[] = [];
     let latestReps = 0;
 
-    for (const row of sampled) {
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
       const sd = row.sensor_data as Record<string, any> | null;
       if (row.total_reps > latestReps) latestReps = row.total_reps;
       if (!sd) continue;
-      const l = sd.left;
-      const r = sd.right;
-      if (!l && !r) continue;
-      gyroData.push({
-        l: [+(l?.gyroX?.toFixed(1) ?? 0), +(l?.gyroY?.toFixed(1) ?? 0), +(l?.gyroZ?.toFixed(1) ?? 0)],
-        r: [+(r?.gyroX?.toFixed(1) ?? 0), +(r?.gyroY?.toFixed(1) ?? 0), +(r?.gyroZ?.toFixed(1) ?? 0)],
-      });
+
+      const left = sd.left;
+      const right = sd.right;
+
+      const lGx = left?.gyroX?.toFixed(2) ?? "N/A";
+      const lGy = left?.gyroY?.toFixed(2) ?? "N/A";
+      const lGz = left?.gyroZ?.toFixed(2) ?? "N/A";
+      const rGx = right?.gyroX?.toFixed(2) ?? "N/A";
+      const rGy = right?.gyroY?.toFixed(2) ?? "N/A";
+      const rGz = right?.gyroZ?.toFixed(2) ?? "N/A";
+
+      gyroTimeSeries.push(
+        `t${i}: L(${lGx}, ${lGy}, ${lGz}) R(${rGx}, ${rGy}, ${rGz})`
+      );
     }
 
-    if (gyroData.length === 0) {
+    if (gyroTimeSeries.length === 0) {
       return new Response(
         JSON.stringify({ analysis: "Sensor data rows exist but contain no gyroscope readings." }),
         { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 
-    const sensorDataStr = JSON.stringify(gyroData);
+    const sensorDataStr = gyroTimeSeries.join("\n");
 
     // Call Gemini API
     const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
@@ -81,7 +84,7 @@ Deno.serve(async (req) => {
 
     const systemPrompt = `You are an expert powerlifting coach and biomechanics analyst. I am providing you with time-series gyroscope data (in degrees per second) from two sensors placed on the left and right sides of a barbell during a set of squats. Analyze the rotational stability of the barbell. Look for imbalances, excessive tilting (uneven ascent/descent), or rotational twisting (bar path deviation). Provide a concise, 3-bullet-point form correction summary addressing any asymmetries or stability issues.`;
 
-    const userMessage = `Gyro data from a squat set (${latestReps} reps, ${gyroData.length} samples from ${rows.length} total). Each entry: l=[gX,gY,gZ] r=[gX,gY,gZ] in deg/s.\n${sensorDataStr}`;
+    const userMessage = `Here is the gyroscope data from a squat set (${latestReps} reps completed). Format: t[index]: L(gyroX, gyroY, gyroZ) R(gyroX, gyroY, gyroZ) — all values in degrees/s.\n\n${sensorDataStr}`;
 
     const geminiResponse = await fetch(geminiUrl, {
       method: "POST",
