@@ -166,10 +166,3 @@
   from { --angle: 0deg; }
   to { --angle: 360deg; }
 }
-
-@keyframes glow-cycle {
-  0%, 100% { box-shadow: 0 0 12px 3px rgba(34, 197, 94, 0.45), 0 0 24px 6px rgba(34, 197, 94, 0.2); }
-  25% { box-shadow: 0 0 12px 3px rgba(14, 165, 233, 0.45), 0 0 24px 6px rgba(14, 165, 233, 0.2); }
-  50% { box-shadow: 0 0 12px 3px rgba(99, 102, 241, 0.45), 0 0 24px 6px rgba(99, 102, 241, 0.2); }
-  75% { box-shadow: 0 0 12px 3px rgba(168, 85, 247, 0.45), 0 0 24px 6px rgba(168, 85, 247, 0.2); }
-}
