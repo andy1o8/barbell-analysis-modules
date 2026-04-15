@@ -59,6 +59,15 @@ Deno.serve(async (req) => {
       });
     }
 
+    if (gyroData.length === 0) {
+      return new Response(
+        JSON.stringify({ analysis: "Sensor data rows exist but contain no gyroscope readings." }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    const sensorDataStr = JSON.stringify(gyroData);
+
     // Call Gemini API
     const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
     if (!GEMINI_API_KEY) {
@@ -72,7 +81,7 @@ Deno.serve(async (req) => {
 
     const systemPrompt = `You are an expert powerlifting coach and biomechanics analyst. I am providing you with time-series gyroscope data (in degrees per second) from two sensors placed on the left and right sides of a barbell during a set of squats. Analyze the rotational stability of the barbell. Look for imbalances, excessive tilting (uneven ascent/descent), or rotational twisting (bar path deviation). Provide a concise, 3-bullet-point form correction summary addressing any asymmetries or stability issues.`;
 
-    const userMessage = `Here is the gyroscope data from a squat set (${latestReps} reps completed). Format: t[index]: L(gyroX, gyroY, gyroZ) R(gyroX, gyroY, gyroZ) — all values in degrees/s.\n\n${sensorDataStr}`;
+    const userMessage = `Gyro data from a squat set (${latestReps} reps, ${gyroData.length} samples from ${rows.length} total). Each entry: l=[gX,gY,gZ] r=[gX,gY,gZ] in deg/s.\n${sensorDataStr}`;
 
     const geminiResponse = await fetch(geminiUrl, {
       method: "POST",
