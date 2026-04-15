@@ -26,11 +26,18 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
     );
 
-    const { error } = await supabase.from("workout_telemetry").insert({
+    const row: Record<string, unknown> = {
       event: body.event ?? "unknown",
       total_reps: body.total_reps ?? 0,
       timestamp_ms: body.timestamp_ms ?? Date.now(),
-    });
+    };
+
+    // When the event is a telemetry_update, persist the nodes payload
+    if (body.event === "telemetry_update" && body.nodes) {
+      row.sensor_data = body.nodes;
+    }
+
+    const { error } = await supabase.from("workout_telemetry").insert(row);
 
     if (error) {
       console.error("Insert error:", error);
