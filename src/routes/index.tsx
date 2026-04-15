@@ -81,10 +81,7 @@ function Dashboard() {
       {/* Main content */}
       <main className="mx-auto max-w-5xl px-6 py-8 space-y-6">
         {/* Rep counter */}
-        <RepCounter
-          reps={session?.reps ?? 0}
-          lastUpdated={session?.lastUpdated ?? new Date().toISOString()}
-        />
+        <RepCounter />
 
         {/* Sensor data */}
         <SensorDataPanel readings={session?.sensorData ?? []} />
