@@ -14,7 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      workout_telemetry: {
+        Row: {
+          created_at: string
+          event: string
+          id: string
+          timestamp_ms: number
+          total_reps: number
+        }
+        Insert: {
+          created_at?: string
+          event: string
+          id?: string
+          timestamp_ms: number
+          total_reps?: number
+        }
+        Update: {
+          created_at?: string
+          event?: string
+          id?: string
+          timestamp_ms?: number
+          total_reps?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
