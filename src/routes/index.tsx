@@ -6,6 +6,7 @@ import { getWorkoutData, resetWorkout } from "@/server/workout.functions";
 import { RepCounter } from "@/components/RepCounter";
 import { SensorDataPanel } from "@/components/SensorDataPanel";
 import { FormAnalysisCard } from "@/components/FormAnalysisCard";
+import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { supabase } from "@/integrations/supabase/client";
@@ -84,12 +85,7 @@ function Dashboard() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5">
-              <span className={`inline-block h-2 w-2 rounded-full ${session ? "bg-primary animate-pulse" : "bg-muted-foreground"}`} />
-              <span className="text-xs text-muted-foreground">
-                {session ? "Connected" : "Connecting…"}
-              </span>
-            </div>
+            <ConnectionStatus />
             <Button variant="outline" size="sm" onClick={handleReset} disabled={resetting}>
               {resetting ? "Resetting…" : "Reset Session"}
             </Button>

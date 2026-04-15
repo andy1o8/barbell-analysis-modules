@@ -14,6 +14,21 @@ export type Database = {
   }
   public: {
     Tables: {
+      system_state: {
+        Row: {
+          id: number
+          reset_pending: boolean | null
+        }
+        Insert: {
+          id?: number
+          reset_pending?: boolean | null
+        }
+        Update: {
+          id?: number
+          reset_pending?: boolean | null
+        }
+        Relationships: []
+      }
       workout_telemetry: {
         Row: {
           created_at: string
