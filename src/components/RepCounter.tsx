@@ -1,9 +1,43 @@
-interface RepCounterProps {
-  reps: number;
-  lastUpdated: string;
-}
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
-export function RepCounter({ reps, lastUpdated }: RepCounterProps) {
+export function RepCounter() {
+  const [reps, setReps] = useState(0);
+  const [lastUpdated, setLastUpdated] = useState<string>(new Date().toISOString());
+
+  useEffect(() => {
+    // Fetch initial max total_reps
+    supabase
+      .from("workout_telemetry")
+      .select("total_reps, created_at")
+      .order("total_reps", { ascending: false })
+      .limit(1)
+      .then(({ data }) => {
+        if (data && data.length > 0) {
+          setReps(data[0].total_reps);
+          setLastUpdated(data[0].created_at);
+        }
+      });
+
+    // Subscribe to realtime inserts
+    const channel = supabase
+      .channel("workout-reps")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "workout_telemetry" },
+        (payload) => {
+          const row = payload.new as { total_reps: number; created_at: string };
+          setReps((prev) => Math.max(prev, row.total_reps));
+          setLastUpdated(row.created_at);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
   const timeAgo = getTimeAgo(lastUpdated);
 
   return (
