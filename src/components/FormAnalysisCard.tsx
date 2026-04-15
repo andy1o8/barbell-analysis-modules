@@ -97,7 +97,7 @@ export function FormAnalysisCard() {
         <h3 className="uppercase tracking-wider text-2xl font-bold text-foreground">
           AI Form Analysis
         </h3>
-        <div className="relative rounded-md p-[2px] [background:conic-gradient(from_var(--angle),#22C55E,#0EA5E9,#6366F1,#A855F7,#22C55E)] animate-[spin-gradient_3s_linear_infinite]">
+        <div className="relative rounded-md p-[3px] [background:conic-gradient(from_var(--angle),#22C55E,#0EA5E9,#6366F1,#A855F7,#22C55E)] animate-[spin-gradient_3s_linear_infinite]">
         <Button
           onClick={handleAnalyze}
           disabled={streaming}
