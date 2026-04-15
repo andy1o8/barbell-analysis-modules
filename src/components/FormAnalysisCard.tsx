@@ -102,7 +102,7 @@ export function FormAnalysisCard() {
           onClick={handleAnalyze}
           disabled={streaming}
           size="sm"
-          className="bg-white text-foreground hover:bg-white/90 px-[13px] py-px text-sm border-0 rounded-[calc(theme(borderRadius.md)-2px)] disabled:opacity-100 opacity-100"
+          className="bg-white text-foreground hover:bg-white/90 px-[13px] text-sm border-0 rounded-[calc(theme(borderRadius.md)-2px)] py-px disabled:opacity-100 opacity-100"
         >
           {streaming ? (
             <>
