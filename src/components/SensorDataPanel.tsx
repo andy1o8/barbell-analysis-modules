@@ -91,7 +91,7 @@ export function SensorDataPanel() {
 
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
-      <h3 className="text-2xl font-extrabold text-foreground uppercase tracking-wider">
+      <h3 className="text-2xl text-foreground uppercase tracking-wider font-bold">
         Live Sensor Data
       </h3>
 

@@ -50,7 +50,7 @@ export function RepCounter({ resetSignal }: { resetSignal?: number }) {
 
   return (
     <div className="flex flex-col items-center justify-center rounded-2xl border bg-card p-8 shadow-sm">
-      <p className="text-lg font-bold text-foreground uppercase tracking-wider">Reps Completed</p>
+      <p className="font-bold text-foreground uppercase tracking-wider text-2xl">Reps Completed</p>
       <p className="mt-3 text-7xl font-bold tabular-nums text-foreground">{reps}</p>
       <p className="mt-3 text-xs text-muted-foreground">Updated {timeAgo}</p>
     </div>

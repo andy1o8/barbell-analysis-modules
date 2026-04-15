@@ -22,7 +22,7 @@ export function ThemeToggle() {
 
   return (
     <Button variant="outline" size="icon" onClick={toggle} aria-label="Toggle theme">
-      {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      {dark ? <Sun className="h-4 w-4 text-[#ffd500]" /> : <Moon className="h-4 w-4" />}
     </Button>
   );
 }
