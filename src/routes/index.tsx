@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
   component: Dashboard,
   head: () => ({
     meta: [
-      { title: "LiftTrack — Athletic Rep Tracker" },
+      { title: "Barbell Analysis Module Tracker" },
       { name: "description", content: "Real-time barbell rep counting and AI-powered squat form analysis using Arduino RP2040 IMU sensors." },
     ],
   }),
@@ -55,7 +55,7 @@ function Dashboard() {
       <header className="border-b bg-card/50 backdrop-blur-sm">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <div>
-            <h1 className="text-xl font-bold text-foreground tracking-tight">LiftTrack</h1>
+            <h1 className="text-xl font-bold text-foreground tracking-tight">Barbell Analysis Module Tracker</h1>
             <p className="text-xs text-muted-foreground">RP2040 × RPi5 Athletic Tracker</p>
           </div>
           <div className="flex items-center gap-3">

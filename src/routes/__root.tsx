@@ -29,9 +29,9 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "LiftTrack — Athletic Rep Tracker" },
+      { title: "Barbell Analysis Module Tracker" },
       { name: "description", content: "Real-time barbell rep counting and AI squat form analysis" },
-      { property: "og:title", content: "LiftTrack" },
+      { property: "og:title", content: "Barbell Analysis Module Tracker" },
       { property: "og:description", content: "Real-time barbell rep counting and AI squat form analysis" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
