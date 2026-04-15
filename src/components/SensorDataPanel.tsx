@@ -109,8 +109,8 @@ export function SensorDataPanel() {
   }, [lastSeen, now]);
 
   return (
-    <div className="rounded-2xl border bg-card p-4 shadow-sm sm:p-6">
-      <h3 className="flex items-center gap-2.5 text-xl text-foreground uppercase tracking-wider font-bold sm:text-2xl">
+    <div className="rounded-2xl border bg-card p-6 shadow-sm">
+      <h3 className="flex items-center gap-2.5 text-2xl text-foreground uppercase tracking-wider font-bold">
         <span className={`inline-block h-3 w-3 rounded-full ${connected ? "bg-red-600 animate-pulse" : "bg-muted-foreground/40"}`} />
         Live Sensor Data
       </h3>

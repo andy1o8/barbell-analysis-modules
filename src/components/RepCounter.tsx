@@ -49,9 +49,11 @@ export function RepCounter({ resetSignal }: { resetSignal?: number }) {
   const timeAgo = getTimeAgo(lastUpdated);
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border bg-card p-6 shadow-sm sm:p-8">
-      <p className="font-bold text-foreground uppercase tracking-wider text-xl sm:text-2xl">Reps Completed</p>
-      <p className="mt-3 font-bold tabular-nums text-foreground text-6xl sm:text-8xl">
+    <div className="flex flex-col items-center justify-center rounded-2xl border bg-card p-8 shadow-sm">
+      <p className="font-bold text-foreground uppercase tracking-wider text-2xl">Reps Completed</p>
+      <p
+        className="mt-3 font-bold tabular-nums text-foreground text-8xl"
+      >
         {reps}
       </p>
       <p className="mt-3 text-xs text-muted-foreground">Updated {timeAgo}</p>
