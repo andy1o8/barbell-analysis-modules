@@ -73,6 +73,7 @@ function Dashboard() {
             <Button variant="outline" size="sm" onClick={handleReset}>
               Reset Session
             </Button>
+            <ThemeToggle />
           </div>
         </div>
       </header>
