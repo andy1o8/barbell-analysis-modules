@@ -28,7 +28,7 @@ export function FormAnalysisCard({ currentAnalysis, hasData }: FormAnalysisCardP
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-bold uppercase tracking-wider bg-[linear-gradient(90deg,#FF6B6B,#4ECDC4,#45B7D1,#96E6A1,#DDA0DD,#FF6B6B)] bg-[length:300%_auto] animate-[gradient-shift_4s_linear_infinite] bg-clip-text text-transparent">
+        <h3 className="uppercase tracking-wider bg-[linear-gradient(90deg,#FF6B6B,#4ECDC4,#45B7D1,#96E6A1,#DDA0DD,#FF6B6B)] bg-[length:300%_auto] animate-[gradient-shift_4s_linear_infinite] bg-clip-text text-transparent text-2xl font-bold shadow-none">
           AI Form Analysis
         </h3>
         <Button
