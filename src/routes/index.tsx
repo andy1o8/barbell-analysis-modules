@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import logoImg from "@/assets/logo.jpg";
 import { useState, useEffect } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { getWorkoutData, resetWorkout } from "@/server/workout.functions";
@@ -54,9 +55,12 @@ function Dashboard() {
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <div>
-            <h1 className="text-xl font-bold text-foreground tracking-tight">Barbell Analysis Module Tracker</h1>
-            <p className="text-xs text-muted-foreground">RP2040 × RPi5 Athletic Tracker</p>
+          <div className="flex items-center gap-3">
+            <img src={logoImg} alt="Barbell Analysis Module logo" className="h-10 w-10 rounded-md object-cover" />
+            <div>
+              <h1 className="text-xl font-bold text-foreground tracking-tight">Barbell Analysis Module Tracker</h1>
+              <p className="text-xs text-muted-foreground">RP2040 × RPi5 Athletic Tracker</p>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5">
