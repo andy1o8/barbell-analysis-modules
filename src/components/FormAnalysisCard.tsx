@@ -52,8 +52,10 @@ export function FormAnalysisCard() {
       </div>
       <div className="mt-4">
         {analysis ? (
-          <div className="rounded-xl bg-muted/50 p-4 text-sm leading-relaxed text-foreground whitespace-pre-line">
-            {analysis}
+          <div className="rounded-xl bg-muted/50 p-4 text-sm text-foreground space-y-3">
+            {analysis.split(/\n\n+/).map((paragraph: string, i: number) => (
+              <p key={i} className="leading-relaxed">{paragraph.trim()}</p>
+            ))}
           </div>
         ) : (
           <p className="text-sm text-muted-foreground">
