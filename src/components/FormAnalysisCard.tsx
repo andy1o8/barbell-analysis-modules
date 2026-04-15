@@ -101,7 +101,7 @@ export function FormAnalysisCard() {
           onClick={handleAnalyze}
           disabled={streaming}
           size="sm"
-          className="bg-primary text-primary-foreground hover:bg-primary/90"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 px-[13px] py-px"
         >
           {streaming ? (
             <>
