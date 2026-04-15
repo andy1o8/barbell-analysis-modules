@@ -113,6 +113,7 @@ export function FormAnalysisCard() {
             "Analyze Form"
           )}
         </Button>
+        </div>
       </div>
       <div className="mt-4">
         {analysis ? (
