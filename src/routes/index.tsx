@@ -81,7 +81,7 @@ function Dashboard() {
           <div className="flex items-center gap-3">
             <img src={logoImg} alt="Barbell Analysis Module logo" className="h-10 w-10 rounded-md object-cover" />
             <div>
-              <h1 className="text-xl font-bold text-foreground tracking-tight">Barbell Analysis Module Tracker</h1>
+              <h1 className="text-lg font-bold text-foreground tracking-tight md:text-xl">Barbell Analysis Module Tracker</h1>
               <p className="text-xs text-muted-foreground">Reps and Form Tracker</p>
             </div>
           </div>
