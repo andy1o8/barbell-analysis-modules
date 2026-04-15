@@ -97,22 +97,22 @@ export function FormAnalysisCard() {
         <h3 className="uppercase tracking-wider text-xl sm:text-2xl font-bold text-foreground whitespace-nowrap">
           AI Form Analysis
         </h3>
-        <div className="relative rounded-md p-[3px] [background:conic-gradient(from_var(--angle),#22C55E,#0EA5E9,#6366F1,#A855F7,#22C55E)] animate-[spin-gradient_3s_linear_infinite] shadow-[0_0_12px_2px_rgba(99,102,241,0.4),0_0_24px_4px_rgba(14,165,233,0.2)]">
-        <Button
-          onClick={handleAnalyze}
-          disabled={streaming}
-          size="sm"
-          className="bg-card text-foreground hover:bg-card/90 px-[13px] text-sm border-0 rounded-[calc(theme(borderRadius.md)-2px)] py-px disabled:opacity-100 opacity-100"
-        >
-          {streaming ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Analyzing…
-            </>
-          ) : (
-            "Analyze Form"
-          )}
-        </Button>
+        <div className="inline-flex rounded-md p-[3px] [background:conic-gradient(from_var(--angle),#22C55E,#0EA5E9,#6366F1,#A855F7,#22C55E)] animate-[spin-gradient_3s_linear_infinite] shadow-[0_0_12px_2px_rgba(99,102,241,0.4),0_0_24px_4px_rgba(14,165,233,0.2)] self-start sm:self-auto">
+          <Button
+            onClick={handleAnalyze}
+            disabled={streaming}
+            size="sm"
+            className="bg-card text-foreground hover:bg-card/90 px-[13px] text-sm border-0 rounded-[calc(theme(borderRadius.md)-2px)] py-px disabled:opacity-100 opacity-100"
+          >
+            {streaming ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Analyzing…
+              </>
+            ) : (
+              "Analyze Form"
+            )}
+          </Button>
         </div>
       </div>
       <div className="mt-4">
