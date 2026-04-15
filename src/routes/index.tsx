@@ -59,7 +59,7 @@ function Dashboard() {
             <img src={logoImg} alt="Barbell Analysis Module logo" className="h-10 w-10 rounded-md object-cover" />
             <div>
               <h1 className="text-xl font-bold text-foreground tracking-tight">Barbell Analysis Module Tracker</h1>
-              <p className="text-xs text-muted-foreground">RP2040 × RPi5 Athletic Tracker</p>
+              <p className="text-xs text-muted-foreground">Reps and Form Tracker</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
