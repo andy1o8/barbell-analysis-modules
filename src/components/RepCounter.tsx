@@ -52,7 +52,7 @@ export function RepCounter({ resetSignal }: { resetSignal?: number }) {
     <div className="flex flex-col items-center justify-center rounded-2xl border bg-card p-8 shadow-sm">
       <p className="font-bold text-foreground uppercase tracking-wider text-2xl">Reps Completed</p>
       <p
-        className="mt-3 text-7xl font-bold tabular-nums text-foreground"
+        className="mt-3 font-bold tabular-nums text-foreground text-8xl"
         style={{
           filter: "drop-shadow(0 0 12px rgba(99,102,241,0.5)) drop-shadow(0 0 24px rgba(14,165,233,0.3))",
         }}
