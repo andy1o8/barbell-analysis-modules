@@ -77,7 +77,7 @@ function Dashboard() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 py-4 md:flex-row md:justify-between md:gap-0">
           <div className="flex items-center gap-3">
             <img src={logoImg} alt="Barbell Analysis Module logo" className="h-10 w-10 rounded-md object-cover" />
             <div>
@@ -85,7 +85,7 @@ function Dashboard() {
               <p className="text-xs text-muted-foreground">Reps and Form Tracker</p>
             </div>
           </div>
-          <div className="items-center gap-3 flex flex-row">
+          <div className="flex flex-wrap items-center justify-center gap-3">
             <ConnectionStatus />
             <Button variant="outline" size="sm" onClick={handleReset} disabled={resetting} className="px-[13px] text-sm">
               {resetting ? "Resetting…" : "Reset Session"}
