@@ -1,30 +1,93 @@
-import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
 export function FormAnalysisCard() {
-  const [analysis, setAnalysis] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [analysis, setAnalysis] = useState<string>("");
+  const [streaming, setStreaming] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
 
   const handleAnalyze = async () => {
-    setLoading(true);
-    setAnalysis(null);
+    setStreaming(true);
+    setAnalysis("");
+
+    const controller = new AbortController();
+    abortRef.current = controller;
+
     try {
-      const { data, error } = await supabase.functions.invoke("analyze-form", {
-        body: {},
+      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/analyze-form`;
+      const resp = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({}),
+        signal: controller.signal,
       });
 
-      if (error) {
-        setAnalysis("Failed to analyze form. Please try again.");
+      if (!resp.ok || !resp.body) {
+        // Try to parse a JSON error/fallback
+        try {
+          const json = await resp.json();
+          setAnalysis(json.analysis ?? json.error ?? "Failed to analyze form. Please try again.");
+        } catch {
+          setAnalysis("Failed to analyze form. Please try again.");
+        }
         return;
       }
 
-      setAnalysis(data?.analysis ?? "No analysis returned.");
-    } catch {
-      setAnalysis("Failed to analyze form. Please try again.");
+      const contentType = resp.headers.get("content-type") ?? "";
+
+      // Non-streaming fallback (e.g. "no data" early returns)
+      if (!contentType.includes("text/event-stream")) {
+        const json = await resp.json();
+        setAnalysis(json.analysis ?? "No analysis returned.");
+        return;
+      }
+
+      // SSE streaming
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let accumulated = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+
+        let newlineIdx: number;
+        while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
+          let line = buffer.slice(0, newlineIdx);
+          buffer = buffer.slice(newlineIdx + 1);
+
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (!line.startsWith("data: ")) continue;
+
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") break;
+
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const text = parsed?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (text) {
+              accumulated += text;
+              setAnalysis(accumulated);
+            }
+          } catch {
+            // partial JSON, ignore
+          }
+        }
+      }
+    } catch (err: any) {
+      if (err?.name !== "AbortError") {
+        setAnalysis("Failed to analyze form. Please try again.");
+      }
     } finally {
-      setLoading(false);
+      setStreaming(false);
+      abortRef.current = null;
     }
   };
 
@@ -36,11 +99,11 @@ export function FormAnalysisCard() {
         </h3>
         <Button
           onClick={handleAnalyze}
-          disabled={loading}
+          disabled={streaming}
           size="sm"
           className="bg-primary text-primary-foreground hover:bg-primary/90"
         >
-          {loading ? (
+          {streaming ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />
               Analyzing…
