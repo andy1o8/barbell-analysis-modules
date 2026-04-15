@@ -17,15 +17,17 @@ interface SensorNodes {
   right?: NodeReading;
 }
 
-const METRICS: { key: keyof NodeReading; label: string; unit: string; decimals: number }[] = [
+const RAD_TO_DEG = 180 / Math.PI;
+
+const METRICS: { key: keyof NodeReading; label: string; unit: string; decimals: number; scale?: number }[] = [
   { key: "positionZ", label: "Pos Z", unit: "m", decimals: 3 },
   { key: "velocityZ", label: "Vel Z", unit: "m/s", decimals: 3 },
   { key: "accelerationX", label: "Acc X", unit: "m/s²", decimals: 2 },
   { key: "accelerationY", label: "Acc Y", unit: "m/s²", decimals: 2 },
   { key: "accelerationZ", label: "Acc Z", unit: "m/s²", decimals: 2 },
-  { key: "gyroscopeX", label: "Gyro X", unit: "rad/s", decimals: 3 },
-  { key: "gyroscopeY", label: "Gyro Y", unit: "rad/s", decimals: 3 },
-  { key: "gyroscopeZ", label: "Gyro Z", unit: "rad/s", decimals: 3 },
+  { key: "gyroscopeX", label: "Gyro X", unit: "°/s", decimals: 1, scale: RAD_TO_DEG },
+  { key: "gyroscopeY", label: "Gyro Y", unit: "°/s", decimals: 1, scale: RAD_TO_DEG },
+  { key: "gyroscopeZ", label: "Gyro Z", unit: "°/s", decimals: 1, scale: RAD_TO_DEG },
 ];
 
 function NodeGrid({ node, side }: { node: NodeReading; side: string }) {
@@ -39,7 +41,7 @@ function NodeGrid({ node, side }: { node: NodeReading; side: string }) {
           <div key={m.key} className="rounded-xl bg-muted/50 px-3 py-2">
             <p className="text-xs text-muted-foreground">{m.label}</p>
             <p className="mt-0.5 text-base font-semibold tabular-nums text-foreground">
-              {(Number(node[m.key] ?? 0)).toFixed(m.decimals)}
+              {(Number(node[m.key] ?? 0) * (m.scale ?? 1)).toFixed(m.decimals)}
               <span className="ml-1 text-[10px] font-normal text-muted-foreground">{m.unit}</span>
             </p>
           </div>
