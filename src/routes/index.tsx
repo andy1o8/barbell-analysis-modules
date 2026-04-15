@@ -104,10 +104,7 @@ function Dashboard() {
         <SensorDataPanel />
 
         {/* AI Form Analysis */}
-        <FormAnalysisCard
-          currentAnalysis={session?.formAnalysis ?? null}
-          hasData={(session?.sensorData.length ?? 0) > 0}
-        />
+        <FormAnalysisCard />
       </main>
     </div>
   );

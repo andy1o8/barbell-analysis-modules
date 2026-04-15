@@ -1,25 +1,28 @@
 import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
-import { analyzeForm } from "@/server/workout.functions";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
-interface FormAnalysisCardProps {
-  currentAnalysis: string | null;
-  hasData: boolean;
-}
-
-export function FormAnalysisCard({ currentAnalysis, hasData }: FormAnalysisCardProps) {
-  const [analysis, setAnalysis] = useState<string | null>(currentAnalysis);
+export function FormAnalysisCard() {
+  const [analysis, setAnalysis] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const analyzeFormFn = useServerFn(analyzeForm);
 
   const handleAnalyze = async () => {
     setLoading(true);
+    setAnalysis(null);
     try {
-      const result = await analyzeFormFn();
-      setAnalysis(result.analysis);
+      const { data, error } = await supabase.functions.invoke("analyze-form", {
+        body: {},
+      });
+
+      if (error) {
+        setAnalysis("Failed to analyze form. Please try again.");
+        return;
+      }
+
+      setAnalysis(data?.analysis ?? "No analysis returned.");
     } catch {
-      setAnalysis("Failed to analyze form.");
+      setAnalysis("Failed to analyze form. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -33,11 +36,18 @@ export function FormAnalysisCard({ currentAnalysis, hasData }: FormAnalysisCardP
         </h3>
         <Button
           onClick={handleAnalyze}
-          disabled={loading || !hasData}
+          disabled={loading}
           size="sm"
           className="bg-primary text-primary-foreground hover:bg-primary/90"
         >
-          {loading ? "Analyzing…" : "Analyze Form"}
+          {loading ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Analyzing…
+            </>
+          ) : (
+            "Analyze Form"
+          )}
         </Button>
       </div>
       <div className="mt-4">
@@ -47,9 +57,7 @@ export function FormAnalysisCard({ currentAnalysis, hasData }: FormAnalysisCardP
           </div>
         ) : (
           <p className="text-sm text-muted-foreground">
-            {hasData
-              ? "Click \"Analyze Form\" to get AI-powered squat form feedback based on gyroscope data."
-              : "Complete some reps first to enable form analysis."}
+            Click "Analyze Form" to get AI-powered squat form feedback based on gyroscope data.
           </p>
         )}
       </div>
