@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
+
+const HEARTBEAT_TIMEOUT_MS = 15_000;
 
 interface NodeReading {
   positionZ: number;
@@ -51,20 +53,31 @@ function NodeGrid({ node, side }: { node: NodeReading; side: string }) {
 
 export function SensorDataPanel() {
   const [nodes, setNodes] = useState<SensorNodes | null>(null);
+  const [lastSeen, setLastSeen] = useState<string | null>(null);
+  const [now, setNow] = useState(Date.now());
+
+  // Tick `now` every second for staleness check
+  useEffect(() => {
+    const interval = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     // Fetch latest telemetry_update row on mount
     const fetchLatest = async () => {
       const { data } = await supabase
         .from("workout_telemetry")
-        .select("sensor_data")
+        .select("sensor_data, created_at")
         .eq("event", "telemetry_update")
         .order("created_at", { ascending: false })
         .limit(1);
 
-      const raw = data?.[0]?.sensor_data;
-      if (raw && typeof raw === "object") {
-        setNodes(raw as unknown as SensorNodes);
+      if (data?.[0]) {
+        setLastSeen(data[0].created_at);
+        const raw = data[0].sensor_data;
+        if (raw && typeof raw === "object") {
+          setNodes(raw as unknown as SensorNodes);
+        }
       }
     };
     fetchLatest();
@@ -76,7 +89,8 @@ export function SensorDataPanel() {
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "workout_telemetry" },
         (payload) => {
-          const row = payload.new as { event: string; sensor_data: unknown };
+          const row = payload.new as { event: string; sensor_data: unknown; created_at: string };
+          setLastSeen(row.created_at);
           if (row.event === "telemetry_update" && row.sensor_data) {
             setNodes(row.sensor_data as SensorNodes);
           }
@@ -89,9 +103,15 @@ export function SensorDataPanel() {
     };
   }, []);
 
+  const connected = useMemo(() => {
+    if (!lastSeen) return false;
+    return now - new Date(lastSeen).getTime() <= HEARTBEAT_TIMEOUT_MS;
+  }, [lastSeen, now]);
+
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
-      <h3 className="text-2xl text-foreground uppercase tracking-wider font-bold">
+      <h3 className="flex items-center gap-2.5 text-2xl text-foreground uppercase tracking-wider font-bold">
+        <span className={`inline-block h-3 w-3 rounded-full ${connected ? "bg-destructive animate-pulse" : "bg-muted-foreground/40"}`} />
         Live Sensor Data
       </h3>
 
