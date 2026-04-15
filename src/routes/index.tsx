@@ -7,6 +7,7 @@ import { RepCounter } from "@/components/RepCounter";
 import { SensorDataPanel } from "@/components/SensorDataPanel";
 import { FormAnalysisCard } from "@/components/FormAnalysisCard";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import type { WorkoutSession } from "@/lib/sensor-store";
 
 export const Route = createFileRoute("/")({
