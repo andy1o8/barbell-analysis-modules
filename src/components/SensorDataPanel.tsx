@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
+
+const HEARTBEAT_TIMEOUT_MS = 15_000;
 
 interface NodeReading {
   positionZ: number;
