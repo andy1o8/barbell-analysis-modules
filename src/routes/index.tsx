@@ -84,7 +84,7 @@ function Dashboard() {
         <RepCounter />
 
         {/* Sensor data */}
-        <SensorDataPanel readings={session?.sensorData ?? []} />
+        <SensorDataPanel />
 
         {/* AI Form Analysis */}
         <FormAnalysisCard

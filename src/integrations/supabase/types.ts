@@ -19,6 +19,7 @@ export type Database = {
           created_at: string
           event: string
           id: string
+          sensor_data: Json | null
           timestamp_ms: number
           total_reps: number
         }
@@ -26,6 +27,7 @@ export type Database = {
           created_at?: string
           event: string
           id?: string
+          sensor_data?: Json | null
           timestamp_ms: number
           total_reps?: number
         }
@@ -33,6 +35,7 @@ export type Database = {
           created_at?: string
           event?: string
           id?: string
+          sensor_data?: Json | null
           timestamp_ms?: number
           total_reps?: number
         }

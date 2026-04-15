@@ -1,0 +1,1 @@
+ALTER TABLE public.workout_telemetry ADD COLUMN sensor_data jsonb;
