@@ -10,7 +10,7 @@ export function SensorDataPanel({ readings }: SensorDataPanelProps) {
   if (!latest) {
     return (
       <div className="rounded-2xl border bg-card p-6 shadow-sm">
-        <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Live Sensor Data</h3>
+        <h3 className="text-lg font-bold text-foreground uppercase tracking-wider">Live Sensor Data</h3>
         <p className="mt-4 text-sm text-muted-foreground">Waiting for sensor data from RPi…</p>
       </div>
     );
@@ -30,7 +30,7 @@ export function SensorDataPanel({ readings }: SensorDataPanelProps) {
   return (
     <div className="rounded-2xl border bg-card p-6 shadow-sm">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Live Sensor Data</h3>
+        <h3 className="text-lg font-bold text-foreground uppercase tracking-wider">Live Sensor Data</h3>
         <span className="text-xs text-muted-foreground">Node: {latest.nodeId}</span>
       </div>
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
