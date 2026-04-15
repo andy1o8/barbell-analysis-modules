@@ -14,6 +14,7 @@ Deno.serve(async (req) => {
   try {
     const supabase = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
 
+    // Fetch all telemetry rows ordered by time
     const { data: rows, error } = await supabase
       .from("workout_telemetry")
       .select("sensor_data, total_reps, created_at")
@@ -33,6 +34,7 @@ Deno.serve(async (req) => {
       });
     }
 
+    // Extract gyro data from sensor_data JSONB
     const gyroTimeSeries: string[] = [];
     let latestReps = 0;
 
@@ -64,6 +66,7 @@ Deno.serve(async (req) => {
 
     const sensorDataStr = gyroTimeSeries.join("\n");
 
+    // Call Gemini API
     const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
     if (!GEMINI_API_KEY) {
       return new Response(JSON.stringify({ analysis: "AI analysis unavailable — Gemini API key not configured." }), {
@@ -72,12 +75,11 @@ Deno.serve(async (req) => {
       });
     }
 
-    const systemPrompt = `You are a friendly, expert powerlifting coach. I am providing you with gyroscope data from two sensors on a barbell during a squat. Analyze the rotational stability, but translate your findings into a simple, non-technical response. Your response MUST be exactly three short paragraphs (1-2 sentences each) and contain absolutely no raw numbers or axis names: Paragraph 1: Explain the main form breakdown you see in simple terms (e.g., "It looks like your barbell is twisting slightly like a helicopter on the way up"). Paragraph 2: Give 1 or 2 clear, actionable cues to fix it (e.g., "Focus on pushing evenly through both feet and taking a massive breath to brace your core before descending"). Paragraph 3: Provide a short, motivating closing statement to hype the lifter up for their next set.`;
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+    const systemPrompt = `You are an expert lifting coach and biomechanics analyst. I am providing you with time-series gyroscope data (in degrees per second) from two sensors placed on the left and right sides of a barbell during a set of squats. Analyze the rotational stability of the barbell. Look for imbalances, excessive tilting (uneven ascent/descent), or rotational twisting (bar path deviation). Provide a concise, but detailed, 3-bullet-point form correction summary addressing any asymmetries or stability issues. Do not start with a friendly introduction.`;
 
     const userMessage = `Here is the gyroscope data from a squat set (${latestReps} reps completed). Format: t[index]: L(gyroX, gyroY, gyroZ) R(gyroX, gyroY, gyroZ) — all values in degrees/s.\n\n${sensorDataStr}`;
-
-    // Use streaming endpoint
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse&key=${GEMINI_API_KEY}`;
 
     const geminiResponse = await fetch(geminiUrl, {
       method: "POST",
@@ -97,10 +99,12 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Stream the SSE response through to the client as text/event-stream
-    return new Response(geminiResponse.body, {
+    const geminiResult = await geminiResponse.json();
+    const analysis = geminiResult?.candidates?.[0]?.content?.parts?.[0]?.text || "Unable to generate analysis.";
+
+    return new Response(JSON.stringify({ analysis }), {
       status: 200,
-      headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (err) {
     console.error("analyze-form error:", err);
