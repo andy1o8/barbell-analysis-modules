@@ -13,7 +13,7 @@ interface RepCounterProps {
   onLogSet: (reps: number) => void | Promise<void>;
 }
 
-export function RepCounter({ resetSignal, loggedSets, onLogSet }: RepCounterProps) {
+export function RepCounter({ resetSignal, loggedSets = [], onLogSet }: RepCounterProps) {
   const [reps, setReps] = useState(0);
   const [lastUpdated, setLastUpdated] = useState<string>(new Date().toISOString());
   const [logging, setLogging] = useState(false);
