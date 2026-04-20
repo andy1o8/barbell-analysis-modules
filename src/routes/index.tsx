@@ -113,6 +113,9 @@ function Dashboard() {
         {/* Rep counter */}
         <RepCounter resetSignal={resetSignal} loggedSets={loggedSets} onLogSet={handleLogSet} />
 
+        {/* Set Tracker */}
+        <SetTracker loggedSets={loggedSets} />
+
         {/* Sensor data */}
         <SensorDataPanel />
 
