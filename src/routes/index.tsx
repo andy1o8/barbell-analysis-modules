@@ -3,7 +3,7 @@ import logoImg from "@/assets/logo.jpg";
 import { useState, useEffect } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { getWorkoutData, resetWorkout } from "@/server/workout.functions";
-import { RepCounter } from "@/components/RepCounter";
+import { RepCounter, type LoggedSet } from "@/components/RepCounter";
 import { SensorDataPanel } from "@/components/SensorDataPanel";
 import { FormAnalysisCard } from "@/components/FormAnalysisCard";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
@@ -26,8 +26,29 @@ function Dashboard() {
   const [session, setSession] = useState<WorkoutSession | null>(null);
   const [resetSignal, setResetSignal] = useState(0);
   const [resetting, setResetting] = useState(false);
+  const [loggedSets, setLoggedSets] = useState<LoggedSet[]>([]);
   const getDataFn = useServerFn(getWorkoutData);
   const resetFn = useServerFn(resetWorkout);
+
+  const clearTelemetryAndSession = async () => {
+    const { error: delError } = await supabase
+      .from("workout_telemetry")
+      .delete()
+      .gte("id", "00000000-0000-0000-0000-000000000000");
+    if (delError) console.error("Delete error:", delError);
+    setResetSignal((s) => s + 1);
+    const data = await resetFn();
+    setSession(data);
+  };
+
+  const handleLogSet = async (reps: number) => {
+    setLoggedSets((prev) => [...prev, { setNumber: prev.length + 1, reps }]);
+    try {
+      await clearTelemetryAndSession();
+    } catch (err) {
+      console.error("Log set reset failed:", err);
+    }
+  };
 
   // Poll for data every 2 seconds
   useEffect(() => {
@@ -53,19 +74,8 @@ function Dashboard() {
   const handleReset = async () => {
     setResetting(true);
     try {
-      // 1. Delete all rows from workout_telemetry
-      const { error: delError } = await supabase
-        .from("workout_telemetry")
-        .delete()
-        .gte("id", "00000000-0000-0000-0000-000000000000");
-      if (delError) console.error("Delete error:", delError);
-
-      // 2. Reset local rep counter state immediately
-      setResetSignal((s) => s + 1);
-
-      // 3. Reset server-side session
-      const data = await resetFn();
-      setSession(data);
+      await clearTelemetryAndSession();
+      setLoggedSets([]);
     } catch (err) {
       console.error("Reset failed:", err);
     } finally {
@@ -100,7 +110,7 @@ function Dashboard() {
       {/* Main content */}
       <main className="mx-auto max-w-5xl px-6 py-8 space-y-6">
         {/* Rep counter */}
-        <RepCounter resetSignal={resetSignal} />
+        <RepCounter resetSignal={resetSignal} loggedSets={loggedSets} onLogSet={handleLogSet} />
 
         {/* Sensor data */}
         <SensorDataPanel />
