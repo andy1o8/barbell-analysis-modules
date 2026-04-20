@@ -43,12 +43,18 @@ function Dashboard() {
   };
 
   const handleLogSet = async (reps: number) => {
-    setLoggedSets((prev) => [...prev, { setNumber: prev.length + 1, reps }]);
+    setLoggedSets((prev) => [...prev, { setNumber: prev.length + 1, reps, weight: "" }]);
     try {
       await clearTelemetryAndSession();
     } catch (err) {
       console.error("Log set reset failed:", err);
     }
+  };
+
+  const handleWeightChange = (setNumber: number, weight: string) => {
+    setLoggedSets((prev) =>
+      prev.map((s) => (s.setNumber === setNumber ? { ...s, weight } : s)),
+    );
   };
 
   // Poll for data every 2 seconds
@@ -114,7 +120,7 @@ function Dashboard() {
         <RepCounter resetSignal={resetSignal} loggedSets={loggedSets} onLogSet={handleLogSet} />
 
         {/* Set Tracker */}
-        <SetTracker loggedSets={loggedSets} />
+        <SetTracker loggedSets={loggedSets} onWeightChange={handleWeightChange} />
 
         {/* AI Form Analysis */}
         <FormAnalysisCard />

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 export interface LoggedSet {
   setNumber: number;
   reps: number;
+  weight: string;
 }
 
 interface RepCounterProps {
