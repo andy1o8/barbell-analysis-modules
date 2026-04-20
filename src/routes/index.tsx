@@ -25,7 +25,6 @@ export const Route = createFileRoute("/")({
 
 function Dashboard() {
   const [session, setSession] = useState<WorkoutSession | null>(null);
-  const [resetSignal, setResetSignal] = useState(0);
   const [resetting, setResetting] = useState(false);
   const [loggedSets, setLoggedSets] = useState<LoggedSet[]>([]);
   const getDataFn = useServerFn(getWorkoutData);
@@ -37,18 +36,14 @@ function Dashboard() {
       .delete()
       .gte("id", "00000000-0000-0000-0000-000000000000");
     if (delError) console.error("Delete error:", delError);
-    setResetSignal((s) => s + 1);
     const data = await resetFn();
     setSession(data);
   };
 
   const handleLogSet = async (reps: number) => {
+    // Local-only: do NOT touch the backend. Derived state in RepCounter
+    // will naturally show 0 once this set is added to loggedSets.
     setLoggedSets((prev) => [...prev, { setNumber: prev.length + 1, reps, weight: "" }]);
-    try {
-      await clearTelemetryAndSession();
-    } catch (err) {
-      console.error("Log set reset failed:", err);
-    }
   };
 
   const handleWeightChange = (setNumber: number, weight: string) => {
@@ -81,8 +76,8 @@ function Dashboard() {
   const handleReset = async () => {
     setResetting(true);
     try {
-      await clearTelemetryAndSession();
       setLoggedSets([]);
+      await clearTelemetryAndSession();
     } catch (err) {
       console.error("Reset failed:", err);
     } finally {
@@ -117,7 +112,7 @@ function Dashboard() {
       {/* Main content */}
       <main className="mx-auto max-w-5xl px-6 py-8 space-y-6">
         {/* Rep counter */}
-        <RepCounter resetSignal={resetSignal} loggedSets={loggedSets} onLogSet={handleLogSet} />
+        <RepCounter loggedSets={loggedSets} onLogSet={handleLogSet} />
 
         {/* Set Tracker */}
         <SetTracker loggedSets={loggedSets} onWeightChange={handleWeightChange} />

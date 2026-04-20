@@ -9,23 +9,14 @@ export interface LoggedSet {
 }
 
 interface RepCounterProps {
-  resetSignal?: number;
   loggedSets: LoggedSet[];
   onLogSet: (reps: number) => void | Promise<void>;
 }
 
-export function RepCounter({ resetSignal, loggedSets = [], onLogSet }: RepCounterProps) {
-  const [reps, setReps] = useState(0);
+export function RepCounter({ loggedSets = [], onLogSet }: RepCounterProps) {
+  const [totalReps, setTotalReps] = useState(0);
   const [lastUpdated, setLastUpdated] = useState<string>(new Date().toISOString());
   const [logging, setLogging] = useState(false);
-
-  // Reset local state when resetSignal changes
-  useEffect(() => {
-    if (resetSignal && resetSignal > 0) {
-      setReps(0);
-      setLastUpdated(new Date().toISOString());
-    }
-  }, [resetSignal]);
 
   useEffect(() => {
     // Fetch initial max total_reps
@@ -36,12 +27,14 @@ export function RepCounter({ resetSignal, loggedSets = [], onLogSet }: RepCounte
       .limit(1)
       .then(({ data }) => {
         if (data && data.length > 0) {
-          setReps(data[0].total_reps);
+          setTotalReps(data[0].total_reps);
           setLastUpdated(data[0].created_at);
+        } else {
+          setTotalReps(0);
         }
       });
 
-    // Subscribe to realtime inserts
+    // Subscribe to realtime inserts and deletes
     const channel = supabase
       .channel("workout-reps")
       .on(
@@ -49,8 +42,29 @@ export function RepCounter({ resetSignal, loggedSets = [], onLogSet }: RepCounte
         { event: "INSERT", schema: "public", table: "workout_telemetry" },
         (payload) => {
           const row = payload.new as { total_reps: number; created_at: string };
-          setReps((prev) => Math.max(prev, row.total_reps));
+          setTotalReps((prev) => Math.max(prev, row.total_reps));
           setLastUpdated(row.created_at);
+        }
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "workout_telemetry" },
+        () => {
+          // On reset, refetch the max
+          supabase
+            .from("workout_telemetry")
+            .select("total_reps, created_at")
+            .order("total_reps", { ascending: false })
+            .limit(1)
+            .then(({ data }) => {
+              if (data && data.length > 0) {
+                setTotalReps(data[0].total_reps);
+                setLastUpdated(data[0].created_at);
+              } else {
+                setTotalReps(0);
+                setLastUpdated(new Date().toISOString());
+              }
+            });
         }
       )
       .subscribe();
@@ -60,13 +74,16 @@ export function RepCounter({ resetSignal, loggedSets = [], onLogSet }: RepCounte
     };
   }, []);
 
+  const loggedRepsSum = loggedSets.reduce((sum, s) => sum + s.reps, 0);
+  const currentSetReps = Math.max(0, totalReps - loggedRepsSum);
+
   const timeAgo = getTimeAgo(lastUpdated);
 
   const handleLogSet = async () => {
-    if (reps <= 0 || logging) return;
+    if (currentSetReps <= 0 || logging) return;
     setLogging(true);
     try {
-      await onLogSet(reps);
+      await onLogSet(currentSetReps);
     } finally {
       setLogging(false);
     }
@@ -75,14 +92,17 @@ export function RepCounter({ resetSignal, loggedSets = [], onLogSet }: RepCounte
   return (
     <div className="flex flex-col items-center justify-center rounded-2xl border bg-card p-8 shadow-sm">
       <p className="font-bold text-foreground uppercase tracking-wider text-2xl">Reps Completed</p>
-      <p className="mt-3 font-bold tabular-nums text-foreground text-8xl">{reps}</p>
-      <p className="mt-3 text-xs text-muted-foreground">Updated {timeAgo}</p>
+      <p className="mt-3 font-bold tabular-nums text-foreground text-8xl">{currentSetReps}</p>
+      <p className="mt-2 text-sm text-muted-foreground tabular-nums">
+        Total Workout Reps: <span className="font-semibold text-foreground">{totalReps}</span>
+      </p>
+      <p className="mt-2 text-xs text-muted-foreground">Updated {timeAgo}</p>
 
       <Button
         variant="secondary"
         size="sm"
         onClick={handleLogSet}
-        disabled={logging || reps <= 0}
+        disabled={logging || currentSetReps <= 0}
         className="mt-5"
       >
         {logging ? "Logging…" : "Log Set"}
