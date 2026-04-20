@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import logoImg from "@/assets/logo.jpg";
+import logoImg from "@/assets/logo-new.jpg";
 import { useState, useEffect } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { getWorkoutData, resetWorkout } from "@/server/workout.functions";
