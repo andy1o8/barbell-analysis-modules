@@ -20,7 +20,7 @@ interface SensorNodes {
 }
 
 const METRICS: { key: keyof NodeReading; label: string; unit: string; decimals: number }[] = [
-  { key: "positionZ", label: "Pos Z", unit: "m", decimals: 3 },
+  { key: "positionZ", label: "Pos Z", unit: "cm", decimals: 3 },
   { key: "velocityZ", label: "Vel Z", unit: "m/s", decimals: 3 },
   { key: "accelerationX", label: "Acc X", unit: "m/s²", decimals: 2 },
   { key: "accelerationY", label: "Acc Y", unit: "m/s²", decimals: 2 },
