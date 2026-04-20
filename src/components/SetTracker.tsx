@@ -44,7 +44,7 @@ export function SetTracker({ loggedSets, onWeightChange }: SetTrackerProps) {
           {loggedSets.map((s) => (
             <div
               key={s.setNumber}
-              className="flex flex-row items-center justify-start gap-6 rounded-xl border border-border bg-muted/40 p-4 text-foreground"
+              className="flex flex-row items-center justify-start gap-12 sm:gap-20 rounded-xl border border-border bg-muted/40 p-4 pl-6 text-foreground"
             >
               <span className="text-lg sm:text-xl font-medium text-muted-foreground">
                 Set {s.setNumber}
