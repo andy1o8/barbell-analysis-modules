@@ -109,11 +109,25 @@ export function SensorDataPanel() {
   }, [lastSeen, now]);
 
   return (
-    <div className="rounded-2xl border bg-card p-6 shadow-sm">
-      <h3 className="flex items-center gap-2.5 text-2xl text-foreground uppercase tracking-wider font-bold">
-        Live Sensor Data
-        <span className={`inline-block h-3 w-3 rounded-full ${connected ? "bg-red-600 animate-pulse" : "bg-muted-foreground/40"}`} />
-      </h3>
+    <details className="group rounded-2xl border bg-card p-6 shadow-sm">
+      <summary className="flex cursor-pointer items-center justify-between gap-2.5 list-none [&::-webkit-details-marker]:hidden">
+        <h3 className="flex items-center gap-2.5 text-2xl text-foreground uppercase tracking-wider font-bold">
+          Live Sensor Data
+          <span className={`inline-block h-3 w-3 rounded-full ${connected ? "bg-red-600 animate-pulse" : "bg-muted-foreground/40"}`} />
+        </h3>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-5 w-5 text-muted-foreground transition-transform duration-200 group-open:rotate-180"
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </summary>
 
       {!nodes ? (
         <p className="mt-4 py-8 text-sm text-muted-foreground text-center">Waiting for sensor data from RPi…</p>
@@ -128,6 +142,6 @@ export function SensorDataPanel() {
           )}
         </div>
       )}
-    </div>
+    </details>
   );
 }
