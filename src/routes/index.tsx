@@ -110,7 +110,7 @@ function Dashboard() {
       {/* Main content */}
       <main className="mx-auto max-w-5xl px-6 py-8 space-y-6">
         {/* Rep counter */}
-        <RepCounter resetSignal={resetSignal} />
+        <RepCounter resetSignal={resetSignal} loggedSets={loggedSets} onLogSet={handleLogSet} />
 
         {/* Sensor data */}
         <SensorDataPanel />
