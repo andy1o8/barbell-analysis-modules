@@ -1,6 +1,11 @@
 import type { LoggedSet } from "@/components/RepCounter";
 
-export function SetTracker({ loggedSets }: { loggedSets: LoggedSet[] }) {
+interface SetTrackerProps {
+  loggedSets: LoggedSet[];
+  onWeightChange: (setNumber: number, weight: string) => void;
+}
+
+export function SetTracker({ loggedSets, onWeightChange }: SetTrackerProps) {
   const totalReps = loggedSets.reduce((sum, s) => sum + s.reps, 0);
 
   return (
@@ -39,12 +44,25 @@ export function SetTracker({ loggedSets }: { loggedSets: LoggedSet[] }) {
           {loggedSets.map((s) => (
             <div
               key={s.setNumber}
-              className="flex items-center justify-between rounded-xl border border-border bg-muted/40 p-4 text-foreground"
+              className="grid grid-cols-3 items-center gap-3 rounded-xl border border-border bg-muted/40 p-4 text-foreground"
             >
               <span className="text-lg sm:text-xl font-medium text-muted-foreground">
                 Set {s.setNumber}
               </span>
-              <span className="text-lg sm:text-xl font-bold tabular-nums">
+              <div className="flex items-center justify-center gap-2">
+                <input
+                  type="number"
+                  inputMode="decimal"
+                  min="0"
+                  step="any"
+                  placeholder="0"
+                  value={s.weight}
+                  onChange={(e) => onWeightChange(s.setNumber, e.target.value)}
+                  className="w-20 rounded-md border border-border bg-background/60 px-2 py-1.5 text-center text-lg sm:text-xl font-semibold tabular-nums text-foreground placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                />
+                <span className="text-sm sm:text-base font-medium text-muted-foreground">lbs</span>
+              </div>
+              <span className="justify-self-end text-lg sm:text-xl font-bold tabular-nums">
                 {s.reps} reps
               </span>
             </div>
