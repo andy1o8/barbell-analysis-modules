@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import type { LoggedSet } from "@/components/RepCounter";
 
 interface SetTrackerProps {
@@ -7,9 +8,22 @@ interface SetTrackerProps {
 
 export function SetTracker({ loggedSets, onWeightChange }: SetTrackerProps) {
   const totalReps = loggedSets.reduce((sum, s) => sum + s.reps, 0);
+  const [open, setOpen] = useState(false);
+  const prevCount = useRef(loggedSets.length);
+
+  useEffect(() => {
+    if (loggedSets.length > prevCount.current) {
+      setOpen(true);
+    }
+    prevCount.current = loggedSets.length;
+  }, [loggedSets.length]);
 
   return (
-    <details className="group rounded-2xl border bg-card p-6 shadow-sm">
+    <details
+      open={open}
+      onToggle={(e) => setOpen((e.currentTarget as HTMLDetailsElement).open)}
+      className="group rounded-2xl border bg-card p-6 shadow-sm"
+    >
       <summary className="flex cursor-pointer items-center justify-between gap-3 list-none [&::-webkit-details-marker]:hidden">
         <div className="flex items-center gap-3">
           <h3 className="uppercase tracking-wider text-xl sm:text-2xl font-bold text-foreground whitespace-nowrap">
