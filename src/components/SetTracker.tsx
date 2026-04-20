@@ -17,7 +17,7 @@ export function SetTracker({ loggedSets }: { loggedSets: LoggedSet[] }) {
       </div>
 
       {loggedSets.length === 0 ? (
-        <p className="py-8 text-sm text-muted-foreground">
+        <p className="py-8 text-center text-sm text-muted-foreground">
           No sets logged yet — finish a set and tap “Log Set”.
         </p>
       ) : (

@@ -116,7 +116,7 @@ export function SensorDataPanel() {
       </h3>
 
       {!nodes ? (
-        <p className="mt-4 py-8 text-sm text-muted-foreground">Waiting for sensor data from RPi…</p>
+        <p className="mt-4 py-8 text-sm text-muted-foreground text-center">Waiting for sensor data from RPi…</p>
       ) : (
         <div className="mt-4 space-y-5">
           {nodes.left && <NodeGrid node={nodes.left} side="Left Node" />}
