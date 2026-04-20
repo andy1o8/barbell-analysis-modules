@@ -90,7 +90,7 @@ function Dashboard() {
       <header className="relative border-b bg-card/50 backdrop-blur-sm">
         <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 py-4 md:flex-row md:justify-between md:gap-0">
           <div className="flex items-center gap-3">
-            <img src={logoImg} alt="Barbell Analysis Module logo" className="h-10 w-10 rounded-md object-cover" />
+            <img src={logoImg} alt="Barbell Analysis Module logo" className="h-16 w-16 md:h-20 md:w-20 rounded-md object-contain bg-white dark:bg-white p-1" />
             <div>
               <h1 className="text-lg font-bold text-foreground tracking-tight md:text-xl">Barbell Analysis Module Tracker</h1>
               <p className="text-xs text-muted-foreground">Reps and Form Tracker</p>
