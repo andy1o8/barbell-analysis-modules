@@ -3,7 +3,7 @@ import logoImg from "@/assets/logo.jpg";
 import { useState, useEffect } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { getWorkoutData, resetWorkout } from "@/server/workout.functions";
-import { RepCounter } from "@/components/RepCounter";
+import { RepCounter, type LoggedSet } from "@/components/RepCounter";
 import { SensorDataPanel } from "@/components/SensorDataPanel";
 import { FormAnalysisCard } from "@/components/FormAnalysisCard";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
