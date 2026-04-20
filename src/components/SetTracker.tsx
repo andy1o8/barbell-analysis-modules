@@ -44,12 +44,12 @@ export function SetTracker({ loggedSets, onWeightChange }: SetTrackerProps) {
           {loggedSets.map((s) => (
             <div
               key={s.setNumber}
-              className="flex flex-row items-center justify-start gap-12 sm:gap-20 rounded-xl border border-border bg-muted/40 p-4 pl-6 text-foreground"
+              className="grid grid-cols-3 items-center gap-3 rounded-xl border border-border bg-muted/40 p-4 text-foreground"
             >
-              <span className="text-lg sm:text-xl font-medium text-muted-foreground">
+              <span className="justify-self-start text-lg sm:text-xl font-medium text-muted-foreground">
                 Set {s.setNumber}
               </span>
-              <div className="flex items-center gap-2">
+              <div className="justify-self-center flex items-center gap-2">
                 <input
                   type="number"
                   inputMode="decimal"
@@ -62,7 +62,7 @@ export function SetTracker({ loggedSets, onWeightChange }: SetTrackerProps) {
                 />
                 <span className="text-sm sm:text-base font-medium text-muted-foreground">lbs</span>
               </div>
-              <span className="text-lg sm:text-xl font-bold tabular-nums">
+              <span className="justify-self-end text-right text-lg sm:text-xl font-bold tabular-nums">
                 {s.reps} reps
               </span>
             </div>
