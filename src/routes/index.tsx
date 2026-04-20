@@ -74,19 +74,8 @@ function Dashboard() {
   const handleReset = async () => {
     setResetting(true);
     try {
-      // 1. Delete all rows from workout_telemetry
-      const { error: delError } = await supabase
-        .from("workout_telemetry")
-        .delete()
-        .gte("id", "00000000-0000-0000-0000-000000000000");
-      if (delError) console.error("Delete error:", delError);
-
-      // 2. Reset local rep counter state immediately
-      setResetSignal((s) => s + 1);
-
-      // 3. Reset server-side session
-      const data = await resetFn();
-      setSession(data);
+      await clearTelemetryAndSession();
+      setLoggedSets([]);
     } catch (err) {
       console.error("Reset failed:", err);
     } finally {
