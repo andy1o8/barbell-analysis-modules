@@ -116,11 +116,11 @@ function Dashboard() {
         {/* Set Tracker */}
         <SetTracker loggedSets={loggedSets} />
 
-        {/* Sensor data */}
-        <SensorDataPanel />
-
         {/* AI Form Analysis */}
         <FormAnalysisCard />
+
+        {/* Sensor data */}
+        <SensorDataPanel />
       </main>
     </div>
   );
