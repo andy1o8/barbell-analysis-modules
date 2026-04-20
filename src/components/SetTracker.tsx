@@ -35,14 +35,18 @@ export function SetTracker({ loggedSets }: { loggedSets: LoggedSet[] }) {
           No sets logged yet — finish a set and tap “Log Set”.
         </p>
       ) : (
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-4 flex flex-col gap-2">
           {loggedSets.map((s) => (
             <div
               key={s.setNumber}
-              className="flex items-center gap-2 rounded-full border border-border bg-muted/40 px-3 py-1 text-xs font-medium text-foreground"
+              className="flex items-center justify-between rounded-xl border border-border bg-muted/40 p-4 text-foreground"
             >
-              <span className="text-muted-foreground">Set {s.setNumber}:</span>
-              <span className="tabular-nums">{s.reps} reps</span>
+              <span className="text-lg sm:text-xl font-medium text-muted-foreground">
+                Set {s.setNumber}
+              </span>
+              <span className="text-lg sm:text-xl font-bold tabular-nums">
+                {s.reps} reps
+              </span>
             </div>
           ))}
         </div>
