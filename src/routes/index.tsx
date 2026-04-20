@@ -5,6 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { getWorkoutData, resetWorkout } from "@/server/workout.functions";
 import { RepCounter, type LoggedSet } from "@/components/RepCounter";
 import { SensorDataPanel } from "@/components/SensorDataPanel";
+import { SetTracker } from "@/components/SetTracker";
 import { FormAnalysisCard } from "@/components/FormAnalysisCard";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { Button } from "@/components/ui/button";
