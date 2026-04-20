@@ -87,28 +87,6 @@ export function RepCounter({ resetSignal, loggedSets = [], onLogSet }: RepCounte
         {logging ? "Logging…" : "Log Set"}
       </Button>
 
-      <div className="mt-6 w-full">
-        <p className="mb-3 text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          Set Tracker
-        </p>
-        {loggedSets.length === 0 ? (
-          <p className="text-center text-xs text-muted-foreground/70">
-            No sets logged yet — finish a set and tap “Log Set”.
-          </p>
-        ) : (
-          <div className="flex flex-wrap justify-center gap-2">
-            {loggedSets.map((s) => (
-              <div
-                key={s.setNumber}
-                className="flex items-center gap-2 rounded-full border border-border bg-muted/40 px-3 py-1 text-xs font-medium text-foreground"
-              >
-                <span className="text-muted-foreground">Set {s.setNumber}:</span>
-                <span className="tabular-nums">{s.reps} reps</span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
     </div>
   );
 }

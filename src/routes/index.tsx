@@ -5,6 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { getWorkoutData, resetWorkout } from "@/server/workout.functions";
 import { RepCounter, type LoggedSet } from "@/components/RepCounter";
 import { SensorDataPanel } from "@/components/SensorDataPanel";
+import { SetTracker } from "@/components/SetTracker";
 import { FormAnalysisCard } from "@/components/FormAnalysisCard";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { Button } from "@/components/ui/button";
@@ -111,6 +112,9 @@ function Dashboard() {
       <main className="mx-auto max-w-5xl px-6 py-8 space-y-6">
         {/* Rep counter */}
         <RepCounter resetSignal={resetSignal} loggedSets={loggedSets} onLogSet={handleLogSet} />
+
+        {/* Set Tracker */}
+        <SetTracker loggedSets={loggedSets} />
 
         {/* Sensor data */}
         <SensorDataPanel />
