@@ -26,8 +26,29 @@ function Dashboard() {
   const [session, setSession] = useState<WorkoutSession | null>(null);
   const [resetSignal, setResetSignal] = useState(0);
   const [resetting, setResetting] = useState(false);
+  const [loggedSets, setLoggedSets] = useState<LoggedSet[]>([]);
   const getDataFn = useServerFn(getWorkoutData);
   const resetFn = useServerFn(resetWorkout);
+
+  const clearTelemetryAndSession = async () => {
+    const { error: delError } = await supabase
+      .from("workout_telemetry")
+      .delete()
+      .gte("id", "00000000-0000-0000-0000-000000000000");
+    if (delError) console.error("Delete error:", delError);
+    setResetSignal((s) => s + 1);
+    const data = await resetFn();
+    setSession(data);
+  };
+
+  const handleLogSet = async (reps: number) => {
+    setLoggedSets((prev) => [...prev, { setNumber: prev.length + 1, reps }]);
+    try {
+      await clearTelemetryAndSession();
+    } catch (err) {
+      console.error("Log set reset failed:", err);
+    }
+  };
 
   // Poll for data every 2 seconds
   useEffect(() => {
