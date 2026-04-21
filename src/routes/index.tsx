@@ -89,8 +89,8 @@ function Dashboard() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="relative border-b bg-card/50 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-5xl flex-col items-start gap-3 px-6 py-4 pr-16 md:flex-row md:items-center md:justify-between md:gap-0">
-          <div className="flex items-center gap-3">
+        <div className="mx-auto flex max-w-5xl flex-col items-stretch gap-3 px-6 py-4 md:flex-row md:items-center md:justify-between md:gap-0 md:pr-16">
+          <div className="flex items-center gap-3 pr-12 md:pr-0">
             <img src={logoImg} alt="Barbell Analysis Module logo" className="h-10 w-10 rounded-md object-cover" />
             <div>
               <h1 className="text-base font-bold text-foreground tracking-tight md:text-base lg:text-xl">Barbell Analysis Module Tracker</h1>
@@ -104,7 +104,7 @@ function Dashboard() {
             </Button>
           </div>
         </div>
-        <div className="absolute right-4 top-4 md:top-1/2 md:-translate-y-1/2">
+        <div className="absolute right-6 top-4 md:right-4 md:top-1/2 md:-translate-y-1/2">
           <ThemeToggle />
         </div>
       </header>
