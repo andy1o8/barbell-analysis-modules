@@ -99,12 +99,12 @@ function Dashboard() {
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <ConnectionStatus />
-            <Button variant="outline" size="sm" onClick={handleReset} disabled={resetting} className="px-[13px] text-sm">
-              {resetting ? "Resetting…" : "Reset Session"}
-            </Button>
             <div className="md:hidden">
               <ThemeToggle />
             </div>
+            <Button variant="outline" size="sm" onClick={handleReset} disabled={resetting} className="px-[13px] text-sm">
+              {resetting ? "Resetting…" : "Reset Session"}
+            </Button>
           </div>
         </div>
         <div className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2">
