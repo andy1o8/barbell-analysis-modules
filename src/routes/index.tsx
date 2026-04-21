@@ -89,7 +89,7 @@ function Dashboard() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="relative border-b bg-card/50 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 py-4 md:flex-row md:justify-between md:gap-0">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 py-4 lg:flex-row lg:justify-between lg:gap-0">
           <div className="flex items-center gap-3">
             <img src={logoImg} alt="Barbell Analysis Module logo" className="h-10 w-10 rounded-md object-cover" />
             <div>
@@ -99,7 +99,7 @@ function Dashboard() {
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <ConnectionStatus />
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <ThemeToggle />
             </div>
             <Button variant="outline" size="sm" onClick={handleReset} disabled={resetting} className="px-[13px] text-sm">
@@ -107,7 +107,7 @@ function Dashboard() {
             </Button>
           </div>
         </div>
-        <div className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2">
+        <div className="hidden lg:block absolute right-4 top-1/2 -translate-y-1/2">
           <ThemeToggle />
         </div>
       </header>
