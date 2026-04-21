@@ -97,9 +97,9 @@ function Dashboard() {
               <p className="text-xs text-muted-foreground">Reps and Form Tracker</p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center justify-start gap-3 md:justify-center">
+          <div className="flex flex-nowrap items-center justify-start gap-3 md:flex-wrap md:justify-center">
             <ConnectionStatus />
-            <Button variant="outline" size="sm" onClick={handleReset} disabled={resetting} className="px-[13px] text-sm">
+            <Button variant="outline" size="sm" onClick={handleReset} disabled={resetting} className="px-[13px] text-sm whitespace-nowrap">
               {resetting ? "Resetting…" : "Reset Session"}
             </Button>
           </div>
