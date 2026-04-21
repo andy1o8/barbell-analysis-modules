@@ -110,19 +110,18 @@ function Dashboard() {
       </header>
 
       {/* Main content */}
-      <main className="mx-auto max-w-5xl px-6 py-8">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-start">
-          {/* Column 1 */}
-          <div className="space-y-6">
-            <RepCounter loggedSets={loggedSets} onLogSet={handleLogSet} />
-            <SetTracker loggedSets={loggedSets} onWeightChange={handleWeightChange} />
-          </div>
-          {/* Column 2 */}
-          <div className="space-y-6">
-            <FormAnalysisCard />
-            <SensorDataPanel />
-          </div>
-        </div>
+      <main className="mx-auto max-w-5xl px-6 py-8 space-y-6">
+        {/* Rep counter */}
+        <RepCounter loggedSets={loggedSets} onLogSet={handleLogSet} />
+
+        {/* Set Tracker */}
+        <SetTracker loggedSets={loggedSets} onWeightChange={handleWeightChange} />
+
+        {/* AI Form Analysis */}
+        <FormAnalysisCard />
+
+        {/* Sensor data */}
+        <SensorDataPanel />
       </main>
     </div>
   );
