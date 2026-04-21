@@ -53,17 +53,22 @@ export function ConnectionStatus() {
   return (
     <div className="flex items-center gap-1.5">
       <span
-        className={`inline-block h-2 w-2 rounded-full ${
+        className={`inline-block h-2 w-2 shrink-0 rounded-full ${
           connected ? "bg-primary animate-pulse" : "bg-red-600"
         }`}
       />
-      <span className="text-xs text-muted-foreground">
-        {connected
-          ? "Connected"
-          : isFinite(diffMs) && diffMs > 0
-            ? `Disconnected · Last seen: ${formatAgo(diffMs)}`
-            : "Disconnected"}
-      </span>
+      {connected ? (
+        <span className="text-xs text-muted-foreground">Connected</span>
+      ) : (
+        <div className="flex flex-col leading-tight sm:flex-row sm:gap-1">
+          <span className="text-xs text-muted-foreground">Disconnected</span>
+          {isFinite(diffMs) && diffMs > 0 && (
+            <span className="text-xs text-muted-foreground">
+              <span className="hidden sm:inline">· </span>Last seen: {formatAgo(diffMs)}
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 }
