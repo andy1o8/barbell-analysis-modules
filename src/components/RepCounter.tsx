@@ -100,10 +100,9 @@ export function RepCounter({ loggedSets = [], onLogSet }: RepCounterProps) {
 
       <Button
         variant="secondary"
-        size="sm"
         onClick={handleLogSet}
         disabled={logging || currentSetReps <= 0}
-        className="mt-5"
+        className="mt-6 px-8 text-base md:px-10 md:text-lg"
       >
         {logging ? "Logging…" : "Log Set"}
       </Button>
