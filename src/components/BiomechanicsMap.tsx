@@ -152,14 +152,18 @@ export function BiomechanicsMap({ analysisText }: Props) {
               </g>
 
               {/* Torso zone — spine, neck, head outline, arms */}
+              {/* Spine — the only element that reflects torso warning state */}
               <g style={{ filter: glow(zones.torso) }}>
                 <line x1="225" y1="180" x2="205" y2="130" stroke={color(zones.torso)} strokeWidth="7" strokeLinecap="round" />
-                {/* Neck + head (slightly forward of shoulders) */}
-                <line x1="205" y1="130" x2="198" y2="115" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" />
-                <circle cx="193" cy="100" r="13" fill="none" stroke={color(zones.torso)} strokeWidth="2.5" />
+              </g>
+
+              {/* Neck + head + arms — always neutral, never reflect torso warning */}
+              <g>
+                <line x1="205" y1="130" x2="198" y2="115" stroke={color("neutral")} strokeWidth="3" strokeLinecap="round" />
+                <circle cx="193" cy="100" r="13" fill="none" stroke={color("neutral")} strokeWidth="2.5" />
                 {/* Bent arm pulling bar into traps: shoulder (205,130) → elbow (235,165) → hand (215,128) */}
-                <line x1="205" y1="130" x2="235" y2="165" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
-                <line x1="235" y1="165" x2="215" y2="128" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
+                <line x1="205" y1="130" x2="235" y2="165" stroke={color("neutral")} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
+                <line x1="235" y1="165" x2="215" y2="128" stroke={color("neutral")} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
               </g>
 
               {/* ===== HIGHLIGHT / GLOW LAYER — joint & barbell circles render last so they sit on top ===== */}
