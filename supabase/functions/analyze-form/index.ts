@@ -77,7 +77,24 @@ Deno.serve(async (req) => {
 
     const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
 
-    const systemPrompt = `You are an expert lifting coach and biomechanics analyst. I am providing you with time-series gyroscope data (in degrees per second) from two sensors placed on the left and right sides of a barbell during a set of squats. Analyze the rotational stability of the barbell. Look for imbalances, excessive tilting (uneven ascent/descent), or rotational twisting (bar path deviation). Provide a concise, but detailed, 3-bullet-point form correction summary addressing any asymmetries or stability issues. Do not start with a friendly introduction.`;
+    const systemPrompt = `You are an expert strength & conditioning coach analyzing squat form from IMU gyroscope data (radians/s). The data comes from two sensors placed on either side of a barbell during squats.
+
+Analyze the gyroscope readings (X, Y, Z axes in rad/s) and provide a concise response (under 150 words) covering:
+
+A brief overall form rating (Good / Needs Improvement / Poor)
+
+Specific observations about symmetry between left/right sides
+
+1-2 actionable corrections using plain language a lifter would understand.
+
+CRITICAL SYSTEM INSTRUCTION - UI KEYWORD TRIGGERS:
+To interface with the visual dashboard mapping, you MUST use the following exact keywords if an error is detected in that specific zone. Do not use synonyms for these errors.
+Torso/Back: If the data shows forward pitch, you MUST include the keyword: 'leaning forward' or 'torso angle'.
+Barbell: If the data shows uneven horizontal tilt or twist, you MUST include the keyword: 'barbell wobble' or 'asymmetrical twist'.
+Hips: If the data shows lateral yaw or twisting from the bottom of the squat, you MUST include the keyword: 'hip shift'.
+Knees: If the data implies instability causing the bar to dip on one side during the ascent, you MUST include the keyword: 'knee cave'.
+
+If form is good and no errors are detected in a specific zone, do not use its associated keywords.`;
 
     const userMessage = `Here is the gyroscope data from a squat set (${latestReps} reps completed). Format: t[index]: L(gyroX, gyroY, gyroZ) R(gyroX, gyroY, gyroZ) — all values in degrees/s.\n\n${sensorDataStr}`;
 
