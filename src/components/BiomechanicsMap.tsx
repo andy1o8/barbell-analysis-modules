@@ -221,12 +221,24 @@ export function BiomechanicsMap({ analysisText }: Props) {
               <circle cx="215" cy="128" r="1.5" fill={color(zones.barbell)} />
             </g>
 
-            {/* Zone labels */}
+            {/* Pointer lines from labels to anatomical targets */}
+            <g stroke="oklch(0.6 0 0 / 0.45)" strokeWidth="0.75" strokeDasharray="2 2" fill="none">
+              {/* Barbell → bar center (215,128) */}
+              <line x1="290" y1="100" x2="231" y2="128" />
+              {/* Torso / Back → mid-spine (~215, 155) */}
+              <line x1="290" y1="150" x2="215" y2="155" />
+              {/* Hips → hip joint (225, 180) */}
+              <line x1="290" y1="195" x2="235" y2="180" />
+              {/* Knees → knee joint (195, 220) */}
+              <line x1="290" y1="235" x2="202" y2="220" />
+            </g>
+
+            {/* Zone labels — ordered top→bottom to match anatomy */}
             <g fontSize="9" fill="oklch(0.65 0 0)" fontFamily="ui-sans-serif, system-ui">
-              <text x="295" y="135">Barbell</text>
-              <text x="295" y="105">Torso / Back</text>
-              <text x="295" y="184">Hips</text>
-              <text x="295" y="224">Knees</text>
+              <text x="295" y="103">Barbell</text>
+              <text x="295" y="153">Torso / Back</text>
+              <text x="295" y="198">Hips</text>
+              <text x="295" y="238">Knees</text>
             </g>
           </svg>
         </div>
