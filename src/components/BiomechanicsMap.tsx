@@ -185,16 +185,26 @@ export function BiomechanicsMap({ analysisText }: Props) {
               <line x1="228" y1="150" x2="218" y2="132" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
             </g>
 
-            {/* Barbell zone — side-profile view: concentric circles (plate face + sleeve end) resting on upper back */}
+            {/* Barbell zone — side-profile: concentric circles centered on the traps (just below neck line) */}
             <g style={{ filter: glow(zones.barbell) }}>
-              {/* Outer plate face (45lb / 20kg) */}
-              <circle cx="200" cy="120" r="22" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2.5" />
-              {/* Mid plate ring */}
-              <circle cx="200" cy="120" r="14" fill="none" stroke={color(zones.barbell)} strokeWidth="1.5" opacity="0.7" />
-              {/* Inner sleeve end */}
-              <circle cx="200" cy="120" r="6" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
+              {/* Outer plate face — semi-transparent x-ray effect so head/neck remain visible */}
+              <circle
+                cx="203"
+                cy="128"
+                r="16"
+                fill={color(zones.barbell, "fill")}
+                fillOpacity="0.25"
+                stroke={color(zones.barbell)}
+                strokeWidth="2"
+                strokeOpacity="0.6"
+                strokeDasharray="3 3"
+              />
+              {/* Mid plate ring — faint */}
+              <circle cx="203" cy="128" r="10" fill="none" stroke={color(zones.barbell)} strokeWidth="1" opacity="0.5" />
+              {/* Inner sleeve end — fully opaque, marks center of mass */}
+              <circle cx="203" cy="128" r="4.5" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
               {/* Sleeve center dot */}
-              <circle cx="200" cy="120" r="1.5" fill={color(zones.barbell)} />
+              <circle cx="203" cy="128" r="1.5" fill={color(zones.barbell)} />
             </g>
 
             {/* Zone labels */}
