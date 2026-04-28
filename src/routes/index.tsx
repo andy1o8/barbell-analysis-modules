@@ -120,7 +120,10 @@ function Dashboard() {
         <SetTracker loggedSets={loggedSets} onWeightChange={handleWeightChange} />
 
         {/* AI Form Analysis */}
-        <FormAnalysisCard />
+        <FormAnalysisCard analysis={analysis} setAnalysis={setAnalysis} />
+
+        {/* Biomechanics Map */}
+        <BiomechanicsMap analysisText={analysis} />
 
         {/* Sensor data */}
         <SensorDataPanel />
