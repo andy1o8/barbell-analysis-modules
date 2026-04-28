@@ -138,17 +138,17 @@ export function BiomechanicsMap({ analysisText }: Props) {
               {/* Center of gravity guide — originates from barbell center (215,128), drops perfectly vertical through foot */}
               <line x1="215" y1="128" x2="215" y2="270" stroke="currentColor" strokeOpacity="0.4" strokeWidth="1" strokeDasharray="2 4" />
 
-              {/* Foot (side profile, facing right: toes at x=195, heel ends just behind ankle at x=217; mid-foot x=206) */}
-              <line x1="195" y1="270" x2="217" y2="270" stroke={color(zones.knees)} strokeWidth="5" strokeLinecap="round" />
+              {/* Foot — always neutral, never reflects knee warning */}
+              <line x1="195" y1="270" x2="217" y2="270" stroke={color("neutral")} strokeWidth="5" strokeLinecap="round" />
 
               {/* ===== BASE SKELETON LAYER — structural lines only (no highlight circles) ===== */}
 
-              {/* Knees zone — shin + thigh lines */}
-              <g style={{ filter: glow(zones.knees) }}>
+              {/* Leg lines — always neutral; only the knee joint circle reflects warning state */}
+              <g>
                 {/* Shin: ankle (210,268) → knee (195,220) */}
-                <line x1="210" y1="268" x2="195" y2="220" stroke={color(zones.knees)} strokeWidth="6" strokeLinecap="round" />
+                <line x1="210" y1="268" x2="195" y2="220" stroke={color("neutral")} strokeWidth="6" strokeLinecap="round" />
                 {/* Thigh: knee (195,220) → hip (225,180) — hips pushed back */}
-                <line x1="195" y1="220" x2="225" y2="180" stroke={color(zones.knees)} strokeWidth="6" strokeLinecap="round" />
+                <line x1="195" y1="220" x2="225" y2="180" stroke={color("neutral")} strokeWidth="6" strokeLinecap="round" />
               </g>
 
               {/* Torso zone — spine, neck, head outline, arms */}
