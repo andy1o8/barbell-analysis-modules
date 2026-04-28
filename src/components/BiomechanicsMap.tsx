@@ -153,48 +153,58 @@ export function BiomechanicsMap({ analysisText }: Props) {
             {/* floor */}
             <line x1="20" y1="270" x2="380" y2="270" stroke="oklch(0.5 0 0 / 0.4)" strokeWidth="1" strokeDasharray="4 4" />
 
-            {/* Knees zone */}
+            {/* Center of gravity guide (vertical line through mid-foot & bar) */}
+            <line x1="200" y1="120" x2="200" y2="270" stroke="oklch(0.5 0 0 / 0.25)" strokeWidth="1" strokeDasharray="2 4" />
+
+            {/* Foot (side profile, facing left: toes at x=180, heel at x=220) */}
+            <line x1="180" y1="270" x2="220" y2="270" stroke={color(zones.knees)} strokeWidth="5" strokeLinecap="round" />
+
+            {/* Knees zone — shin (ankle→knee) + thigh (knee→hip). Knee tracks slightly over toes. */}
             <g style={{ filter: glow(zones.knees) }}>
-              {/* Upper leg (thigh) */}
-              <line x1="180" y1="180" x2="210" y2="225" stroke={color(zones.knees)} strokeWidth="6" strokeLinecap="round" />
-              {/* Lower leg (shin) */}
-              <line x1="210" y1="225" x2="195" y2="270" stroke={color(zones.knees)} strokeWidth="6" strokeLinecap="round" />
+              {/* Shin: ankle (210,268) → knee (195,220) */}
+              <line x1="210" y1="268" x2="195" y2="220" stroke={color(zones.knees)} strokeWidth="6" strokeLinecap="round" />
+              {/* Thigh: knee (195,220) → hip (225,180) — hips pushed back */}
+              <line x1="195" y1="220" x2="225" y2="180" stroke={color(zones.knees)} strokeWidth="6" strokeLinecap="round" />
               {/* Knee joint */}
-              <circle cx="210" cy="225" r="7" fill={color(zones.knees, "fill")} stroke={color(zones.knees)} strokeWidth="2" />
+              <circle cx="195" cy="220" r="7" fill={color(zones.knees, "fill")} stroke={color(zones.knees)} strokeWidth="2" />
             </g>
 
             {/* Hips zone */}
             <g style={{ filter: glow(zones.hips) }}>
-              <circle cx="180" cy="180" r="10" fill={color(zones.hips, "fill")} stroke={color(zones.hips)} strokeWidth="2" />
+              <circle cx="225" cy="180" r="10" fill={color(zones.hips, "fill")} stroke={color(zones.hips)} strokeWidth="2" />
             </g>
 
-            {/* Torso zone (leans forward in squat) */}
+            {/* Torso zone — leans forward so shoulders sit over mid-foot. Hip(225,180) → shoulder(205,130) */}
             <g style={{ filter: glow(zones.torso) }}>
-              <line x1="180" y1="180" x2="155" y2="105" stroke={color(zones.torso)} strokeWidth="7" strokeLinecap="round" />
-              {/* Head */}
-              <circle cx="148" cy="85" r="14" fill="none" stroke={color(zones.torso)} strokeWidth="2.5" />
-              {/* Arm reaching to bar */}
-              <line x1="155" y1="115" x2="135" y2="135" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.7" />
+              <line x1="225" y1="180" x2="205" y2="130" stroke={color(zones.torso)} strokeWidth="7" strokeLinecap="round" />
+              {/* Neck + head (slightly forward of shoulders) */}
+              <line x1="205" y1="130" x2="198" y2="115" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" />
+              <circle cx="193" cy="100" r="13" fill="none" stroke={color(zones.torso)} strokeWidth="2.5" />
+              {/* Bent arm gripping bar: shoulder (205,130) → elbow (228,150) → hand (218,132) */}
+              <line x1="205" y1="130" x2="228" y2="150" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
+              <line x1="228" y1="150" x2="218" y2="132" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
             </g>
 
-            {/* Barbell zone */}
+            {/* Barbell zone — bar rests on upper back at shoulder height (y=132), centered over mid-foot (x=200) */}
             <g style={{ filter: glow(zones.barbell) }}>
               {/* Bar */}
-              <line x1="60" y1="135" x2="210" y2="135" stroke={color(zones.barbell)} strokeWidth="3" strokeLinecap="round" />
-              {/* Left plates */}
-              <rect x="55" y="115" width="10" height="40" rx="2" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
-              <rect x="40" y="108" width="14" height="54" rx="2" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
-              {/* Right plates */}
-              <rect x="210" y="115" width="10" height="40" rx="2" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
-              <rect x="220" y="108" width="14" height="54" rx="2" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
+              <line x1="140" y1="132" x2="260" y2="132" stroke={color(zones.barbell)} strokeWidth="3" strokeLinecap="round" />
+              {/* Left plates (toe side) */}
+              <rect x="135" y="112" width="10" height="40" rx="2" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
+              <rect x="120" y="105" width="14" height="54" rx="2" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
+              {/* Right plates (heel side) */}
+              <rect x="255" y="112" width="10" height="40" rx="2" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
+              <rect x="266" y="105" width="14" height="54" rx="2" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
+              {/* Contact point indicator on upper back */}
+              <circle cx="205" cy="132" r="3" fill={color(zones.barbell)} />
             </g>
 
             {/* Zone labels */}
             <g fontSize="9" fill="oklch(0.65 0 0)" fontFamily="ui-sans-serif, system-ui">
-              <text x="270" y="138">Barbell</text>
-              <text x="270" y="108">Torso / Back</text>
-              <text x="230" y="184">Hips</text>
-              <text x="230" y="228">Knees</text>
+              <text x="295" y="135">Barbell</text>
+              <text x="295" y="105">Torso / Back</text>
+              <text x="295" y="184">Hips</text>
+              <text x="295" y="224">Knees</text>
             </g>
           </svg>
         </div>
