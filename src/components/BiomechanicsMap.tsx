@@ -180,9 +180,9 @@ export function BiomechanicsMap({ analysisText }: Props) {
               {/* Neck + head (slightly forward of shoulders) */}
               <line x1="205" y1="130" x2="198" y2="115" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" />
               <circle cx="193" cy="100" r="13" fill="none" stroke={color(zones.torso)} strokeWidth="2.5" />
-              {/* Bent arm gripping bar: shoulder (205,130) → elbow (228,150) → hand (218,132) */}
-              <line x1="205" y1="130" x2="228" y2="150" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
-              <line x1="228" y1="150" x2="218" y2="132" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
+              {/* Bent arm pulling bar into traps: shoulder (205,130) → elbow (235,165, down & back) → hand (203,128, at bar center) */}
+              <line x1="205" y1="130" x2="235" y2="165" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
+              <line x1="235" y1="165" x2="203" y2="128" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
             </g>
 
             {/* Barbell zone — side-profile: concentric circles centered on the traps (just below neck line) */}
