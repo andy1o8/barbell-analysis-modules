@@ -233,8 +233,8 @@ export function BiomechanicsMap({ analysisText }: Props) {
               <line x1="290" y1="235" x2="202" y2="220" />
             </g>
 
-            {/* Zone labels — ordered top→bottom to match anatomy. fill=currentColor adapts to theme */}
-            <g fontSize="9" fill="currentColor" fontFamily="ui-sans-serif, system-ui">
+            {/* Zone labels — ordered top→bottom to match anatomy. Muted in light mode, white in dark mode for readability */}
+            <g fontSize="9" fontFamily="ui-sans-serif, system-ui" className="fill-muted-foreground dark:fill-white">
               <text x="295" y="103">Barbell</text>
               <text x="295" y="153">Torso / Back</text>
               <text x="295" y="198">Hips</text>
