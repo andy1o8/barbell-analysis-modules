@@ -113,7 +113,7 @@ function color(status: Status, kind: "stroke" | "fill" = "stroke") {
   if (status === "warning") return kind === "stroke" ? "oklch(0.72 0.18 45)" : "oklch(0.72 0.18 45 / 0.18)";
   if (status === "good") return kind === "stroke" ? "oklch(0.65 0.2 150)" : "oklch(0.65 0.2 150 / 0.18)";
   // Neutral: use foreground token so it's dark grey in light mode and white in dark mode
-  return kind === "stroke" ? "hsl(var(--foreground))" : "hsl(var(--foreground) / 0.08)";
+  return kind === "stroke" ? "var(--foreground)" : "color-mix(in oklab, var(--foreground) 8%, transparent)";
 }
 
 function glow(status: Status) {
