@@ -221,8 +221,8 @@ export function BiomechanicsMap({ analysisText }: Props) {
               <circle cx="215" cy="128" r="1.5" fill={color(zones.barbell)} />
             </g>
 
-            {/* Pointer lines from labels to anatomical targets */}
-            <g stroke="oklch(0.6 0 0 / 0.45)" strokeWidth="0.75" strokeDasharray="2 2" fill="none">
+            {/* Pointer lines from labels to anatomical targets — currentColor adapts to theme */}
+            <g stroke="currentColor" strokeOpacity="0.7" strokeWidth="0.75" strokeDasharray="2 2" fill="none">
               {/* Barbell → bar center (215,128) */}
               <line x1="290" y1="100" x2="231" y2="128" />
               {/* Torso / Back → mid-spine (~215, 155) */}
@@ -233,8 +233,8 @@ export function BiomechanicsMap({ analysisText }: Props) {
               <line x1="290" y1="235" x2="202" y2="220" />
             </g>
 
-            {/* Zone labels — ordered top→bottom to match anatomy */}
-            <g fontSize="9" fill="oklch(0.65 0 0)" fontFamily="ui-sans-serif, system-ui">
+            {/* Zone labels — ordered top→bottom to match anatomy. fill=currentColor adapts to theme */}
+            <g fontSize="9" fill="currentColor" fontFamily="ui-sans-serif, system-ui">
               <text x="295" y="103">Barbell</text>
               <text x="295" y="153">Torso / Back</text>
               <text x="295" y="198">Hips</text>
