@@ -28,6 +28,7 @@ function Dashboard() {
   const [session, setSession] = useState<WorkoutSession | null>(null);
   const [resetting, setResetting] = useState(false);
   const [loggedSets, setLoggedSets] = useState<LoggedSet[]>([]);
+  const [analysis, setAnalysis] = useState<string>("");
   const getDataFn = useServerFn(getWorkoutData);
   const resetFn = useServerFn(resetWorkout);
 
