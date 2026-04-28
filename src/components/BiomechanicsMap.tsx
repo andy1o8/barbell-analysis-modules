@@ -164,88 +164,91 @@ export function BiomechanicsMap({ analysisText }: Props) {
         {/* Diagram */}
         <div className="relative w-full aspect-[4/3] rounded-xl bg-muted/30 border overflow-hidden">
           <svg viewBox="0 0 400 300" className="w-full h-full text-muted-foreground" xmlns="http://www.w3.org/2000/svg">
-            {/* floor — uses currentColor so it adapts to light/dark theme */}
+            {/* floor — uses currentColor so it adapts to light/dark theme; spans full viewBox width */}
             <line x1="20" y1="270" x2="380" y2="270" stroke="currentColor" strokeOpacity="0.55" strokeWidth="1" strokeDasharray="4 4" />
 
-            {/* Center of gravity guide — originates from barbell center (215,128), drops perfectly vertical through foot */}
-            <line x1="215" y1="128" x2="215" y2="270" stroke="currentColor" strokeOpacity="0.4" strokeWidth="1" strokeDasharray="2 4" />
+            {/* Centering wrapper — shifts the entire composition (figure + bar + pointers + labels) left so it sits dead-center within the card. All internal coordinates remain unchanged. */}
+            <g transform="translate(-60, 0)">
+              {/* Center of gravity guide — originates from barbell center (215,128), drops perfectly vertical through foot */}
+              <line x1="215" y1="128" x2="215" y2="270" stroke="currentColor" strokeOpacity="0.4" strokeWidth="1" strokeDasharray="2 4" />
 
-            {/* Foot (side profile, facing right: toes at x=195, heel ends just behind ankle at x=217; mid-foot x=206) */}
-            <line x1="195" y1="270" x2="217" y2="270" stroke={color(zones.knees)} strokeWidth="5" strokeLinecap="round" />
+              {/* Foot (side profile, facing right: toes at x=195, heel ends just behind ankle at x=217; mid-foot x=206) */}
+              <line x1="195" y1="270" x2="217" y2="270" stroke={color(zones.knees)} strokeWidth="5" strokeLinecap="round" />
 
-            {/* ===== BASE SKELETON LAYER — structural lines only (no highlight circles) ===== */}
+              {/* ===== BASE SKELETON LAYER — structural lines only (no highlight circles) ===== */}
 
-            {/* Knees zone — shin + thigh lines */}
-            <g style={{ filter: glow(zones.knees) }}>
-              {/* Shin: ankle (210,268) → knee (195,220) */}
-              <line x1="210" y1="268" x2="195" y2="220" stroke={color(zones.knees)} strokeWidth="6" strokeLinecap="round" />
-              {/* Thigh: knee (195,220) → hip (225,180) — hips pushed back */}
-              <line x1="195" y1="220" x2="225" y2="180" stroke={color(zones.knees)} strokeWidth="6" strokeLinecap="round" />
-            </g>
+              {/* Knees zone — shin + thigh lines */}
+              <g style={{ filter: glow(zones.knees) }}>
+                {/* Shin: ankle (210,268) → knee (195,220) */}
+                <line x1="210" y1="268" x2="195" y2="220" stroke={color(zones.knees)} strokeWidth="6" strokeLinecap="round" />
+                {/* Thigh: knee (195,220) → hip (225,180) — hips pushed back */}
+                <line x1="195" y1="220" x2="225" y2="180" stroke={color(zones.knees)} strokeWidth="6" strokeLinecap="round" />
+              </g>
 
-            {/* Torso zone — spine, neck, head outline, arms */}
-            <g style={{ filter: glow(zones.torso) }}>
-              <line x1="225" y1="180" x2="205" y2="130" stroke={color(zones.torso)} strokeWidth="7" strokeLinecap="round" />
-              {/* Neck + head (slightly forward of shoulders) */}
-              <line x1="205" y1="130" x2="198" y2="115" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" />
-              <circle cx="193" cy="100" r="13" fill="none" stroke={color(zones.torso)} strokeWidth="2.5" />
-              {/* Bent arm pulling bar into traps: shoulder (205,130) → elbow (235,165) → hand (215,128) */}
-              <line x1="205" y1="130" x2="235" y2="165" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
-              <line x1="235" y1="165" x2="215" y2="128" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
-            </g>
+              {/* Torso zone — spine, neck, head outline, arms */}
+              <g style={{ filter: glow(zones.torso) }}>
+                <line x1="225" y1="180" x2="205" y2="130" stroke={color(zones.torso)} strokeWidth="7" strokeLinecap="round" />
+                {/* Neck + head (slightly forward of shoulders) */}
+                <line x1="205" y1="130" x2="198" y2="115" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" />
+                <circle cx="193" cy="100" r="13" fill="none" stroke={color(zones.torso)} strokeWidth="2.5" />
+                {/* Bent arm pulling bar into traps: shoulder (205,130) → elbow (235,165) → hand (215,128) */}
+                <line x1="205" y1="130" x2="235" y2="165" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
+                <line x1="235" y1="165" x2="215" y2="128" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
+              </g>
 
-            {/* ===== HIGHLIGHT / GLOW LAYER — joint & barbell circles render last so they sit on top ===== */}
+              {/* ===== HIGHLIGHT / GLOW LAYER — joint & barbell circles render last so they sit on top ===== */}
 
-            {/* Knee joint */}
-            <g style={{ filter: glow(zones.knees) }}>
-              <circle cx="195" cy="220" r="7" fill={color(zones.knees, "fill")} stroke={color(zones.knees)} strokeWidth="2" />
-            </g>
+              {/* Knee joint */}
+              <g style={{ filter: glow(zones.knees) }}>
+                <circle cx="195" cy="220" r="7" fill={color(zones.knees, "fill")} stroke={color(zones.knees)} strokeWidth="2" />
+              </g>
 
-            {/* Hip joint */}
-            <g style={{ filter: glow(zones.hips) }}>
-              <circle cx="225" cy="180" r="10" fill={color(zones.hips, "fill")} stroke={color(zones.hips)} strokeWidth="2" />
-            </g>
+              {/* Hip joint */}
+              <g style={{ filter: glow(zones.hips) }}>
+                <circle cx="225" cy="180" r="10" fill={color(zones.hips, "fill")} stroke={color(zones.hips)} strokeWidth="2" />
+              </g>
 
-            {/* Barbell — concentric plate circles, top layer */}
-            <g style={{ filter: glow(zones.barbell) }}>
-              {/* Outer plate face — semi-transparent x-ray effect so head/neck remain visible */}
-              <circle
-                cx="215"
-                cy="128"
-                r="16"
-                fill={color(zones.barbell, "fill")}
-                fillOpacity="0.25"
-                stroke={color(zones.barbell)}
-                strokeWidth="2"
-                strokeOpacity="0.6"
-                strokeDasharray="3 3"
-              />
-              {/* Mid plate ring — faint */}
-              <circle cx="215" cy="128" r="10" fill="none" stroke={color(zones.barbell)} strokeWidth="1" opacity="0.5" />
-              {/* Inner sleeve end — fully opaque, marks center of mass */}
-              <circle cx="215" cy="128" r="4.5" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
-              {/* Sleeve center dot */}
-              <circle cx="215" cy="128" r="1.5" fill={color(zones.barbell)} />
-            </g>
+              {/* Barbell — concentric plate circles, top layer */}
+              <g style={{ filter: glow(zones.barbell) }}>
+                {/* Outer plate face — semi-transparent x-ray effect so head/neck remain visible */}
+                <circle
+                  cx="215"
+                  cy="128"
+                  r="16"
+                  fill={color(zones.barbell, "fill")}
+                  fillOpacity="0.25"
+                  stroke={color(zones.barbell)}
+                  strokeWidth="2"
+                  strokeOpacity="0.6"
+                  strokeDasharray="3 3"
+                />
+                {/* Mid plate ring — faint */}
+                <circle cx="215" cy="128" r="10" fill="none" stroke={color(zones.barbell)} strokeWidth="1" opacity="0.5" />
+                {/* Inner sleeve end — fully opaque, marks center of mass */}
+                <circle cx="215" cy="128" r="4.5" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
+                {/* Sleeve center dot */}
+                <circle cx="215" cy="128" r="1.5" fill={color(zones.barbell)} />
+              </g>
 
-            {/* Pointer lines from labels to anatomical targets — currentColor adapts to theme */}
-            <g stroke="currentColor" strokeOpacity="0.7" strokeWidth="0.75" strokeDasharray="2 2" fill="none">
-              {/* Barbell → bar center (215,128) */}
-              <line x1="290" y1="100" x2="231" y2="128" />
-              {/* Torso / Back → mid-spine (~215, 155) */}
-              <line x1="290" y1="150" x2="215" y2="155" />
-              {/* Hips → hip joint (225, 180) */}
-              <line x1="290" y1="195" x2="235" y2="180" />
-              {/* Knees → knee joint (195, 220) */}
-              <line x1="290" y1="235" x2="202" y2="220" />
-            </g>
+              {/* Pointer lines from labels to anatomical targets — currentColor adapts to theme */}
+              <g stroke="currentColor" strokeOpacity="0.7" strokeWidth="0.75" strokeDasharray="2 2" fill="none">
+                {/* Barbell → bar center (215,128) */}
+                <line x1="290" y1="100" x2="231" y2="128" />
+                {/* Torso / Back → mid-spine (~215, 155) */}
+                <line x1="290" y1="150" x2="215" y2="155" />
+                {/* Hips → hip joint (225, 180) */}
+                <line x1="290" y1="195" x2="235" y2="180" />
+                {/* Knees → knee joint (195, 220) */}
+                <line x1="290" y1="235" x2="202" y2="220" />
+              </g>
 
-            {/* Zone labels — ordered top→bottom to match anatomy. Muted in light mode, white in dark mode for readability */}
-            <g fontSize="9" fontFamily="ui-sans-serif, system-ui" className="fill-muted-foreground dark:fill-white">
-              <text x="295" y="103">Barbell</text>
-              <text x="295" y="153">Torso / Back</text>
-              <text x="295" y="198">Hips</text>
-              <text x="295" y="238">Knees</text>
+              {/* Zone labels — ordered top→bottom to match anatomy. Muted in light mode, white in dark mode for readability */}
+              <g fontSize="9" fontFamily="ui-sans-serif, system-ui" className="fill-muted-foreground dark:fill-white">
+                <text x="295" y="103">Barbell</text>
+                <text x="295" y="153">Torso / Back</text>
+                <text x="295" y="198">Hips</text>
+                <text x="295" y="238">Knees</text>
+              </g>
             </g>
           </svg>
         </div>
