@@ -11,12 +11,6 @@ import { BiomechanicsMap } from "@/components/BiomechanicsMap";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion";
 import { supabase } from "@/integrations/supabase/client";
 import type { WorkoutSession } from "@/lib/sensor-store";
 
@@ -125,36 +119,11 @@ function Dashboard() {
         {/* Set Tracker */}
         <SetTracker loggedSets={loggedSets} onWeightChange={handleWeightChange} />
 
-        {/* Collapsible: AI Form Analysis & Biomechanics Map */}
-        <Accordion
-          type="multiple"
-          defaultValue={["form-analysis", "biomechanics"]}
-          className="space-y-6"
-        >
-          <AccordionItem
-            value="form-analysis"
-            className="rounded-2xl border bg-card shadow-sm overflow-hidden"
-          >
-            <AccordionTrigger className="px-6 py-4 hover:no-underline uppercase tracking-wider text-base font-bold text-foreground">
-              AI Form Analysis
-            </AccordionTrigger>
-            <AccordionContent className="px-6 pb-6 pt-0">
-              <FormAnalysisCard analysis={analysis} setAnalysis={setAnalysis} />
-            </AccordionContent>
-          </AccordionItem>
+        {/* AI Form Analysis */}
+        <FormAnalysisCard analysis={analysis} setAnalysis={setAnalysis} />
 
-          <AccordionItem
-            value="biomechanics"
-            className="rounded-2xl border bg-card shadow-sm overflow-hidden"
-          >
-            <AccordionTrigger className="px-6 py-4 hover:no-underline uppercase tracking-wider text-base font-bold text-foreground">
-              Biomechanics Map
-            </AccordionTrigger>
-            <AccordionContent className="px-6 pb-6 pt-0">
-              <BiomechanicsMap analysisText={analysis} />
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+        {/* Biomechanics Map */}
+        <BiomechanicsMap analysisText={analysis} />
 
         {/* Sensor data */}
         <SensorDataPanel />
