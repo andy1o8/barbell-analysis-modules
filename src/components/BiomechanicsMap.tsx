@@ -9,47 +9,11 @@ interface ZoneState {
   barbell: Status;
 }
 
-const PITCH_KEYWORDS = [
-  "chest fall",
-  "chest falling",
-  "chest down",
-  "leaning forward",
-  "lean forward",
-  "forward lean",
-  "pitch",
-  "torso angle",
-  "back angle",
-  "good morning",
-  "rounding",
-  "rounded back",
-  "hips rise",
-  "hips shoot",
-];
-
-const YAW_KEYWORDS = [
-  "asymmetr",
-  "twist",
-  "wobble",
-  "yaw",
-  "uneven",
-  "tilt",
-  "tilting",
-  "rotation",
-  "imbalance",
-  "shift",
-  "lateral",
-  "left side",
-  "right side",
-  "one side",
-];
-
-const KNEE_KEYWORDS = [
-  "knee",
-  "knees cav",
-  "valgus",
-  "knees in",
-  "knees out",
-];
+// Strict keyword mapping — exact substrings (lowercased) per zone
+const TORSO_KEYWORDS = ["leaning forward", "torso angle"];
+const BARBELL_KEYWORDS = ["barbell wobble", "asymmetrical twist"];
+const HIP_KEYWORDS = ["hip shift"];
+const KNEE_KEYWORDS = ["knee cave"];
 
 const GOOD_KEYWORDS = [
   "good form",
