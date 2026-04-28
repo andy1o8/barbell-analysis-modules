@@ -185,18 +185,16 @@ export function BiomechanicsMap({ analysisText }: Props) {
               <line x1="228" y1="150" x2="218" y2="132" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
             </g>
 
-            {/* Barbell zone — bar rests on upper back where neck meets torso (y=120), centered over mid-foot (x=200) */}
+            {/* Barbell zone — side-profile view: concentric circles (plate face + sleeve end) resting on upper back */}
             <g style={{ filter: glow(zones.barbell) }}>
-              {/* Bar */}
-              <line x1="140" y1="120" x2="260" y2="120" stroke={color(zones.barbell)} strokeWidth="3" strokeLinecap="round" />
-              {/* Left plates (toe side) */}
-              <rect x="135" y="100" width="10" height="40" rx="2" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
-              <rect x="120" y="93" width="14" height="54" rx="2" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
-              {/* Right plates (heel side) */}
-              <rect x="255" y="100" width="10" height="40" rx="2" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
-              <rect x="266" y="93" width="14" height="54" rx="2" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
-              {/* Contact point indicator on upper back */}
-              <circle cx="205" cy="120" r="3" fill={color(zones.barbell)} />
+              {/* Outer plate face (45lb / 20kg) */}
+              <circle cx="200" cy="120" r="22" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2.5" />
+              {/* Mid plate ring */}
+              <circle cx="200" cy="120" r="14" fill="none" stroke={color(zones.barbell)} strokeWidth="1.5" opacity="0.7" />
+              {/* Inner sleeve end */}
+              <circle cx="200" cy="120" r="6" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
+              {/* Sleeve center dot */}
+              <circle cx="200" cy="120" r="1.5" fill={color(zones.barbell)} />
             </g>
 
             {/* Zone labels */}
