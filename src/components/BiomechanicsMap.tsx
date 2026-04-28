@@ -129,22 +129,36 @@ export function BiomechanicsMap({ analysisText }: Props) {
   const { zones, label, overall } = useMemo(() => analyze(analysisText), [analysisText]);
 
   return (
-    <div className="rounded-2xl border bg-card p-6 shadow-sm">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-        <h3 className="uppercase tracking-wider text-xl sm:text-2xl font-bold text-foreground">
-          Biomechanics Map
-        </h3>
-        <span
-          className="text-xs font-medium px-3 py-1 rounded-full border self-start sm:self-auto"
-          style={{
-            color: color(overall, "stroke"),
-            borderColor: color(overall, "stroke"),
-            backgroundColor: color(overall, "fill"),
-          }}
+    <details open className="group rounded-2xl border bg-card p-6 shadow-sm">
+      <summary className="flex cursor-pointer items-center justify-between gap-3 list-none [&::-webkit-details-marker]:hidden">
+        <div className="flex flex-1 flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <h3 className="uppercase tracking-wider text-xl sm:text-2xl font-bold text-foreground">
+            Biomechanics Map
+          </h3>
+          <span
+            className="text-xs font-medium px-3 py-1 rounded-full border self-start sm:self-auto"
+            style={{
+              color: color(overall, "stroke"),
+              borderColor: color(overall, "stroke"),
+              backgroundColor: color(overall, "fill"),
+            }}
+          >
+            {label}
+          </span>
+        </div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="ml-2 h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-200 group-open:rotate-180"
         >
-          {label}
-        </span>
-      </div>
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </summary>
 
       <div className="mt-4 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-center">
         {/* Diagram */}
@@ -231,7 +245,7 @@ export function BiomechanicsMap({ analysisText }: Props) {
           Run the AI Form Analysis above to highlight correctable zones.
         </p>
       )}
-    </div>
+    </details>
   );
 }
 
