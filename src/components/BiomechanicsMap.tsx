@@ -173,33 +173,40 @@ export function BiomechanicsMap({ analysisText }: Props) {
             {/* Foot (side profile, facing right: toes at x=195, heel ends just behind ankle at x=217; mid-foot x=206) */}
             <line x1="195" y1="270" x2="217" y2="270" stroke={color(zones.knees)} strokeWidth="5" strokeLinecap="round" />
 
-            {/* Knees zone — shin (ankle→knee) + thigh (knee→hip). Knee tracks slightly over toes. */}
+            {/* ===== BASE SKELETON LAYER — structural lines only (no highlight circles) ===== */}
+
+            {/* Knees zone — shin + thigh lines */}
             <g style={{ filter: glow(zones.knees) }}>
               {/* Shin: ankle (210,268) → knee (195,220) */}
               <line x1="210" y1="268" x2="195" y2="220" stroke={color(zones.knees)} strokeWidth="6" strokeLinecap="round" />
               {/* Thigh: knee (195,220) → hip (225,180) — hips pushed back */}
               <line x1="195" y1="220" x2="225" y2="180" stroke={color(zones.knees)} strokeWidth="6" strokeLinecap="round" />
-              {/* Knee joint */}
-              <circle cx="195" cy="220" r="7" fill={color(zones.knees, "fill")} stroke={color(zones.knees)} strokeWidth="2" />
             </g>
 
-            {/* Hips zone */}
-            <g style={{ filter: glow(zones.hips) }}>
-              <circle cx="225" cy="180" r="10" fill={color(zones.hips, "fill")} stroke={color(zones.hips)} strokeWidth="2" />
-            </g>
-
-            {/* Torso zone — leans forward so shoulders sit over mid-foot. Hip(225,180) → shoulder(205,130) */}
+            {/* Torso zone — spine, neck, head outline, arms */}
             <g style={{ filter: glow(zones.torso) }}>
               <line x1="225" y1="180" x2="205" y2="130" stroke={color(zones.torso)} strokeWidth="7" strokeLinecap="round" />
               {/* Neck + head (slightly forward of shoulders) */}
               <line x1="205" y1="130" x2="198" y2="115" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" />
               <circle cx="193" cy="100" r="13" fill="none" stroke={color(zones.torso)} strokeWidth="2.5" />
-              {/* Bent arm pulling bar into traps: shoulder (205,130) → elbow (235,165, down & back) → hand (215,128, at bar center) */}
+              {/* Bent arm pulling bar into traps: shoulder (205,130) → elbow (235,165) → hand (215,128) */}
               <line x1="205" y1="130" x2="235" y2="165" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
               <line x1="235" y1="165" x2="215" y2="128" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
             </g>
 
-            {/* Barbell zone — side-profile: concentric circles centered on the traps (just below neck line) */}
+            {/* ===== HIGHLIGHT / GLOW LAYER — joint & barbell circles render last so they sit on top ===== */}
+
+            {/* Knee joint */}
+            <g style={{ filter: glow(zones.knees) }}>
+              <circle cx="195" cy="220" r="7" fill={color(zones.knees, "fill")} stroke={color(zones.knees)} strokeWidth="2" />
+            </g>
+
+            {/* Hip joint */}
+            <g style={{ filter: glow(zones.hips) }}>
+              <circle cx="225" cy="180" r="10" fill={color(zones.hips, "fill")} stroke={color(zones.hips)} strokeWidth="2" />
+            </g>
+
+            {/* Barbell — concentric plate circles, top layer */}
             <g style={{ filter: glow(zones.barbell) }}>
               {/* Outer plate face — semi-transparent x-ray effect so head/neck remain visible */}
               <circle
