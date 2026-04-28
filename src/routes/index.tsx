@@ -7,6 +7,7 @@ import { RepCounter, type LoggedSet } from "@/components/RepCounter";
 import { SensorDataPanel } from "@/components/SensorDataPanel";
 import { SetTracker } from "@/components/SetTracker";
 import { FormAnalysisCard } from "@/components/FormAnalysisCard";
+import { BiomechanicsMap } from "@/components/BiomechanicsMap";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -27,6 +28,7 @@ function Dashboard() {
   const [session, setSession] = useState<WorkoutSession | null>(null);
   const [resetting, setResetting] = useState(false);
   const [loggedSets, setLoggedSets] = useState<LoggedSet[]>([]);
+  const [analysis, setAnalysis] = useState<string>("");
   const getDataFn = useServerFn(getWorkoutData);
   const resetFn = useServerFn(resetWorkout);
 
@@ -118,7 +120,10 @@ function Dashboard() {
         <SetTracker loggedSets={loggedSets} onWeightChange={handleWeightChange} />
 
         {/* AI Form Analysis */}
-        <FormAnalysisCard />
+        <FormAnalysisCard analysis={analysis} setAnalysis={setAnalysis} />
+
+        {/* Biomechanics Map */}
+        <BiomechanicsMap analysisText={analysis} />
 
         {/* Sensor data */}
         <SensorDataPanel />
