@@ -11,6 +11,12 @@ import { BiomechanicsMap } from "@/components/BiomechanicsMap";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 import { supabase } from "@/integrations/supabase/client";
 import type { WorkoutSession } from "@/lib/sensor-store";
 
