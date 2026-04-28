@@ -154,10 +154,10 @@ export function BiomechanicsMap({ analysisText }: Props) {
             <line x1="20" y1="270" x2="380" y2="270" stroke="oklch(0.5 0 0 / 0.4)" strokeWidth="1" strokeDasharray="4 4" />
 
             {/* Center of gravity guide (vertical line through mid-foot & bar) */}
-            <line x1="200" y1="120" x2="200" y2="270" stroke="oklch(0.5 0 0 / 0.25)" strokeWidth="1" strokeDasharray="2 4" />
+            <line x1="215" y1="120" x2="215" y2="270" stroke="oklch(0.5 0 0 / 0.25)" strokeWidth="1" strokeDasharray="2 4" />
 
-            {/* Foot (side profile, facing left: toes at x=180, heel at x=220) */}
-            <line x1="180" y1="270" x2="220" y2="270" stroke={color(zones.knees)} strokeWidth="5" strokeLinecap="round" />
+            {/* Foot (side profile, facing left: toes at x=195, heel at x=235; mid-foot x=215) */}
+            <line x1="195" y1="270" x2="235" y2="270" stroke={color(zones.knees)} strokeWidth="5" strokeLinecap="round" />
 
             {/* Knees zone — shin (ankle→knee) + thigh (knee→hip). Knee tracks slightly over toes. */}
             <g style={{ filter: glow(zones.knees) }}>
