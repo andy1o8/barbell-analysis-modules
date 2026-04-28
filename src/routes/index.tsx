@@ -7,6 +7,7 @@ import { RepCounter, type LoggedSet } from "@/components/RepCounter";
 import { SensorDataPanel } from "@/components/SensorDataPanel";
 import { SetTracker } from "@/components/SetTracker";
 import { FormAnalysisCard } from "@/components/FormAnalysisCard";
+import { BiomechanicsMap } from "@/components/BiomechanicsMap";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
