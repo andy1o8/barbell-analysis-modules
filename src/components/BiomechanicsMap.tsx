@@ -245,9 +245,9 @@ function LegendRow({ label, status }: { label: string; status: Status }) {
   const text =
     status === "warning" ? "Needs attention" : status === "good" ? "Good" : "Neutral";
   return (
-    <div className="flex items-center gap-2 text-xs">
+    <div className="flex items-center gap-2 text-xs whitespace-nowrap">
       <span
-        className="h-2.5 w-2.5 rounded-full"
+        className="h-2.5 w-2.5 shrink-0 rounded-full"
         style={{
           backgroundColor: color(status, "stroke"),
           boxShadow: status !== "neutral" ? `0 0 8px ${color(status, "stroke")}` : "none",
