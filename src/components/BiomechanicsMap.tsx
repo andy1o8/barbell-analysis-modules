@@ -126,7 +126,7 @@ export function BiomechanicsMap({ analysisText }: Props) {
         </svg>
       </summary>
 
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-center">
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-[1fr_15rem] gap-6 items-center">
         {/* Diagram */}
         <div className="relative w-full aspect-[4/3] rounded-xl bg-muted/30 border overflow-hidden">
           <svg viewBox="0 0 400 300" className="w-full h-full text-muted-foreground" xmlns="http://www.w3.org/2000/svg">
@@ -245,9 +245,9 @@ function LegendRow({ label, status }: { label: string; status: Status }) {
   const text =
     status === "warning" ? "Needs attention" : status === "good" ? "Good" : "Neutral";
   return (
-    <div className="flex items-center gap-2 text-xs">
+    <div className="flex items-center gap-2 text-xs whitespace-nowrap">
       <span
-        className="h-2.5 w-2.5 rounded-full"
+        className="h-2.5 w-2.5 shrink-0 rounded-full"
         style={{
           backgroundColor: color(status, "stroke"),
           boxShadow: status !== "neutral" ? `0 0 8px ${color(status, "stroke")}` : "none",
