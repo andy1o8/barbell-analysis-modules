@@ -154,10 +154,10 @@ export function BiomechanicsMap({ analysisText }: Props) {
             <line x1="20" y1="270" x2="380" y2="270" stroke="oklch(0.5 0 0 / 0.4)" strokeWidth="1" strokeDasharray="4 4" />
 
             {/* Center of gravity guide (vertical line through mid-foot & bar) */}
-            <line x1="200" y1="120" x2="200" y2="270" stroke="oklch(0.5 0 0 / 0.25)" strokeWidth="1" strokeDasharray="2 4" />
+            <line x1="215" y1="120" x2="215" y2="270" stroke="oklch(0.5 0 0 / 0.25)" strokeWidth="1" strokeDasharray="2 4" />
 
-            {/* Foot (side profile, facing left: toes at x=180, heel at x=220) */}
-            <line x1="180" y1="270" x2="220" y2="270" stroke={color(zones.knees)} strokeWidth="5" strokeLinecap="round" />
+            {/* Foot (side profile, facing left: toes at x=195, heel at x=235; mid-foot x=215) */}
+            <line x1="195" y1="270" x2="235" y2="270" stroke={color(zones.knees)} strokeWidth="5" strokeLinecap="round" />
 
             {/* Knees zone — shin (ankle→knee) + thigh (knee→hip). Knee tracks slightly over toes. */}
             <g style={{ filter: glow(zones.knees) }}>
@@ -180,16 +180,16 @@ export function BiomechanicsMap({ analysisText }: Props) {
               {/* Neck + head (slightly forward of shoulders) */}
               <line x1="205" y1="130" x2="198" y2="115" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" />
               <circle cx="193" cy="100" r="13" fill="none" stroke={color(zones.torso)} strokeWidth="2.5" />
-              {/* Bent arm pulling bar into traps: shoulder (205,130) → elbow (235,165, down & back) → hand (203,128, at bar center) */}
+              {/* Bent arm pulling bar into traps: shoulder (205,130) → elbow (235,165, down & back) → hand (215,128, at bar center) */}
               <line x1="205" y1="130" x2="235" y2="165" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
-              <line x1="235" y1="165" x2="203" y2="128" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
+              <line x1="235" y1="165" x2="215" y2="128" stroke={color(zones.torso)} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
             </g>
 
             {/* Barbell zone — side-profile: concentric circles centered on the traps (just below neck line) */}
             <g style={{ filter: glow(zones.barbell) }}>
               {/* Outer plate face — semi-transparent x-ray effect so head/neck remain visible */}
               <circle
-                cx="203"
+                cx="215"
                 cy="128"
                 r="16"
                 fill={color(zones.barbell, "fill")}
@@ -200,11 +200,11 @@ export function BiomechanicsMap({ analysisText }: Props) {
                 strokeDasharray="3 3"
               />
               {/* Mid plate ring — faint */}
-              <circle cx="203" cy="128" r="10" fill="none" stroke={color(zones.barbell)} strokeWidth="1" opacity="0.5" />
+              <circle cx="215" cy="128" r="10" fill="none" stroke={color(zones.barbell)} strokeWidth="1" opacity="0.5" />
               {/* Inner sleeve end — fully opaque, marks center of mass */}
-              <circle cx="203" cy="128" r="4.5" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
+              <circle cx="215" cy="128" r="4.5" fill={color(zones.barbell, "fill")} stroke={color(zones.barbell)} strokeWidth="2" />
               {/* Sleeve center dot */}
-              <circle cx="203" cy="128" r="1.5" fill={color(zones.barbell)} />
+              <circle cx="215" cy="128" r="1.5" fill={color(zones.barbell)} />
             </g>
 
             {/* Zone labels */}
