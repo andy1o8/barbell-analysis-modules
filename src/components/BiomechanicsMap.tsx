@@ -40,11 +40,12 @@ function analyze(text: string): { zones: ZoneState; label: string; overall: Stat
     };
   }
 
-  const hasPitch = PITCH_KEYWORDS.some((k) => t.includes(k));
-  const hasYaw = YAW_KEYWORDS.some((k) => t.includes(k));
+  const hasTorso = TORSO_KEYWORDS.some((k) => t.includes(k));
+  const hasBarbell = BARBELL_KEYWORDS.some((k) => t.includes(k));
+  const hasHips = HIP_KEYWORDS.some((k) => t.includes(k));
   const hasKnee = KNEE_KEYWORDS.some((k) => t.includes(k));
   const hasGood = GOOD_KEYWORDS.some((k) => t.includes(k));
-  const anyIssue = hasPitch || hasYaw || hasKnee;
+  const anyIssue = hasTorso || hasBarbell || hasHips || hasKnee;
 
   if (hasGood && !anyIssue) {
     return {
@@ -55,15 +56,16 @@ function analyze(text: string): { zones: ZoneState; label: string; overall: Stat
   }
 
   const zones: ZoneState = {
-    torso: hasPitch ? "warning" : "neutral",
-    hips: hasYaw ? "warning" : "neutral",
+    torso: hasTorso ? "warning" : "neutral",
+    hips: hasHips ? "warning" : "neutral",
     knees: hasKnee ? "warning" : "neutral",
-    barbell: hasYaw ? "warning" : "neutral",
+    barbell: hasBarbell ? "warning" : "neutral",
   };
 
   const labels: string[] = [];
-  if (hasPitch) labels.push("Torso angle");
-  if (hasYaw) labels.push("Bar / hip symmetry");
+  if (hasTorso) labels.push("Torso angle");
+  if (hasBarbell) labels.push("Barbell stability");
+  if (hasHips) labels.push("Hip symmetry");
   if (hasKnee) labels.push("Knee tracking");
 
   return {
