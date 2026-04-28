@@ -245,7 +245,7 @@ export function BiomechanicsMap({ analysisText }: Props) {
           Run the AI Form Analysis above to highlight correctable zones.
         </p>
       )}
-    </div>
+    </details>
   );
 }
 
