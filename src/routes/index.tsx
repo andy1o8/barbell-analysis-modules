@@ -8,6 +8,7 @@ import { SensorDataPanel } from "@/components/SensorDataPanel";
 import { SetTracker } from "@/components/SetTracker";
 import { FormAnalysisCard } from "@/components/FormAnalysisCard";
 import { BiomechanicsMap } from "@/components/BiomechanicsMap";
+import { BiomechanicsDebugPanel } from "@/components/BiomechanicsDebugPanel";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -124,6 +125,9 @@ function Dashboard() {
 
         {/* Biomechanics Map */}
         <BiomechanicsMap analysisText={analysis} />
+
+        {/* Temporary debug panel for verifying SVG highlight wiring */}
+        {import.meta.env.DEV && <BiomechanicsDebugPanel setAnalysis={setAnalysis} />}
 
         {/* Sensor data */}
         <SensorDataPanel />
