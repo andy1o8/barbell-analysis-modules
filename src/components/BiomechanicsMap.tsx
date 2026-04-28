@@ -10,10 +10,10 @@ interface ZoneState {
 }
 
 // Strict keyword mapping — exact substrings (lowercased) per zone
-const TORSO_KEYWORDS = ["leaning forward", "torso angle"];
-const BARBELL_KEYWORDS = ["barbell wobble", "asymmetrical twist"];
-const HIP_KEYWORDS = ["hip shift"];
-const KNEE_KEYWORDS = ["knee cave"];
+const TORSO_KEYWORDS = ["leaning", "torso angle", "chest falling", "good morning", "pitch"];
+const BARBELL_KEYWORDS = ["wobble", "asymmetrical", "twist", "tilt", "spin", "tip", "uneven"];
+const HIP_KEYWORDS = ["hip shift", "shifting", "hips rising", "shoot up"];
+const KNEE_KEYWORDS = ["knee cave", "valgus", "caving", "collapsing"];
 
 const GOOD_KEYWORDS = [
   "good form",
