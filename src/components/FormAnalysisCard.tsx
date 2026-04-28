@@ -1,9 +1,13 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
-export function FormAnalysisCard() {
-  const [analysis, setAnalysis] = useState<string>("");
+interface FormAnalysisCardProps {
+  analysis: string;
+  setAnalysis: (value: string) => void;
+}
+
+export function FormAnalysisCard({ analysis, setAnalysis }: FormAnalysisCardProps) {
   const [streaming, setStreaming] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
 
