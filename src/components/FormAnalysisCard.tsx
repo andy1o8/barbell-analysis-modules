@@ -100,7 +100,7 @@ export function FormAnalysisCard({ analysis, setAnalysis }: FormAnalysisCardProp
       <summary className="flex cursor-pointer items-center justify-between gap-3 list-none [&::-webkit-details-marker]:hidden">
         <div className="flex flex-1 flex-col sm:flex-row sm:items-center justify-between gap-3">
           <h3 className="uppercase tracking-wider text-xl sm:text-2xl font-bold text-foreground whitespace-nowrap">
-            AI Form Analysis
+            ML Form Analysis
           </h3>
           <div className="inline-flex rounded-md p-[3px] [background:conic-gradient(from_var(--angle),#22C55E,#0EA5E9,#6366F1,#A855F7,#22C55E)] animate-[spin-gradient_3s_linear_infinite] shadow-[0_0_12px_2px_rgba(99,102,241,0.4),0_0_24px_4px_rgba(14,165,233,0.2)] self-start sm:self-auto">
             <Button
