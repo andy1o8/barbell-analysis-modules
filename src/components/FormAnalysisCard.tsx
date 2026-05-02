@@ -149,6 +149,9 @@ export function FormAnalysisCard({ analysis, setAnalysis }: FormAnalysisCardProp
             Click "Analyze Form" to get AI-powered squat form feedback based on gyroscope data.
           </p>
         )}
+        <p className="mt-3 text-xs text-muted-foreground italic">
+          AI can make mistakes. Verify important feedback with a qualified coach.
+        </p>
       </div>
     </details>
   );
