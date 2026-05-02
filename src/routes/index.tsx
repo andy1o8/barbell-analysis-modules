@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
   component: Dashboard,
   head: () => ({
     meta: [
-      { title: "Barbell Analysis Module Tracker" },
+      { title: "Barbell Analysis Modules" },
       { name: "description", content: "Real-time barbell rep counting and AI-powered squat form analysis using Arduino RP2040 IMU sensors." },
     ],
   }),
@@ -95,7 +95,7 @@ function Dashboard() {
           <div className="flex items-center gap-3 pr-12 md:pr-0">
             <img src={logoImg} alt="Barbell Analysis Module logo" className="h-10 w-10 rounded-md object-cover" />
             <div>
-              <h1 className="text-base font-bold text-foreground tracking-tight md:text-base lg:text-xl">Barbell Analysis Module Tracker</h1>
+              <h1 className="text-base font-bold text-foreground tracking-tight md:text-base lg:text-xl">Barbell Analysis Modules</h1>
               <p className="text-xs text-muted-foreground">Reps and Form Tracker</p>
             </div>
           </div>
