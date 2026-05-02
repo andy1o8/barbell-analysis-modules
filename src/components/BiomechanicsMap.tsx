@@ -224,7 +224,7 @@ export function BiomechanicsMap({ analysisText }: Props) {
         </div>
 
         {/* Legend */}
-        <div className="flex md:flex-col gap-3 md:gap-2 flex-wrap">
+        <div className="flex flex-col gap-2">
           <LegendRow label="Barbell" status={zones.barbell} />
           <LegendRow label="Torso / Back" status={zones.torso} />
           <LegendRow label="Hips" status={zones.hips} />
