@@ -234,7 +234,7 @@ export function BiomechanicsMap({ analysisText }: Props) {
 
       {!analysisText.trim() && (
         <p className="mt-4 text-xs text-muted-foreground">
-          Run the AI Form Analysis above to highlight correctable zones.
+          Run the Form Analysis above to highlight correctable zones.
         </p>
       )}
     </details>
